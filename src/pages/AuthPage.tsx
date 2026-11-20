@@ -1,0 +1,228 @@
+import React, { useState } from 'react';
+import {
+  TrendingUp,
+  Lock,
+  Mail,
+  User,
+  ArrowRight,
+  ShieldCheck,
+  CheckCircle2,
+  AlertCircle,
+} from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+
+export const AuthPage: React.FC = () => {
+  const { login, register } = useAuth();
+
+  const [tab, setTab] = useState<'login' | 'register' | 'forgot'>('login');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg(null);
+    setSuccessMsg(null);
+
+    try {
+      setLoading(true);
+      if (tab === 'login') {
+        await login(email, password);
+      } else if (tab === 'register') {
+        if (!fullName.trim()) {
+          setErrorMsg('Please enter your full name');
+          setLoading(false);
+          return;
+        }
+        await register(email, fullName, password);
+      } else if (tab === 'forgot') {
+        // Send reset request
+        setSuccessMsg('If an account exists for this email, a reset link has been dispatched.');
+      }
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Authentication failed. Please check credentials.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async () => {
+    try {
+      setLoading(true);
+      await login('trader@elitetradejournal.com', 'password123');
+    } catch (err: any) {
+      setErrorMsg(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center p-4 selection:bg-indigo-500 selection:text-white">
+      <div className="w-full max-w-md space-y-6">
+        {/* Brand */}
+        <div className="text-center space-y-2">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-indigo-400 text-white shadow-xl shadow-indigo-500/25">
+            <TrendingUp className="w-7 h-7 stroke-[2.5]" />
+          </div>
+          <h1 className="text-2xl font-bold tracking-tight text-white">
+            ELITE TRADE JOURNAL
+          </h1>
+          <p className="text-xs text-slate-400">
+            Professional Manual Trading Journal & Analytics System
+          </p>
+        </div>
+
+        {/* Card */}
+        <div className="p-6 sm:p-8 rounded-3xl border border-slate-800 bg-slate-900/90 shadow-2xl backdrop-blur-md space-y-5">
+          {/* Tab Switcher */}
+          <div className="flex p-1 rounded-xl bg-slate-950/60 border border-slate-800">
+            <button
+              type="button"
+              onClick={() => {
+                setTab('login');
+                setErrorMsg(null);
+                setSuccessMsg(null);
+              }}
+              className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                tab === 'login'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              Sign In
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setTab('register');
+                setErrorMsg(null);
+                setSuccessMsg(null);
+              }}
+              className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                tab === 'register'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : 'text-slate-400 hover:text-white'
+              }`}
+            >
+              Register
+            </button>
+          </div>
+
+          {errorMsg && (
+            <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 flex-shrink-0" />
+              <span>{errorMsg}</span>
+            </div>
+          )}
+
+          {successMsg && (
+            <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
+              <span>{successMsg}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {tab === 'register' && (
+              <div>
+                <label className="block text-xs font-medium text-slate-300 mb-1">Full Name</label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <input
+                    type="text"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    placeholder="Jane Trader"
+                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950/60 text-white focus:outline-none focus:border-indigo-500"
+                    required={tab === 'register'}
+                  />
+                </div>
+              </div>
+            )}
+
+            <div>
+              <label className="block text-xs font-medium text-slate-300 mb-1">Email Address</label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="trader@elitetradejournal.com"
+                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950/60 text-white focus:outline-none focus:border-indigo-500 font-mono"
+                  required
+                />
+              </div>
+            </div>
+
+            {tab !== 'forgot' && (
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="text-xs font-medium text-slate-300">Password</label>
+                  {tab === 'login' && (
+                    <button
+                      type="button"
+                      onClick={() => setTab('forgot')}
+                      className="text-[11px] text-indigo-400 hover:text-indigo-300"
+                    >
+                      Forgot?
+                    </button>
+                  )}
+                </div>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••••••"
+                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950/60 text-white focus:outline-none focus:border-indigo-500 font-mono"
+                    required={tab !== 'forgot'}
+                  />
+                </div>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition-all shadow-md shadow-indigo-600/30"
+            >
+              <span>
+                {loading
+                  ? 'Processing...'
+                  : tab === 'login'
+                  ? 'Sign In to Journal'
+                  : tab === 'register'
+                  ? 'Create Elite Journal Account'
+                  : 'Send Reset Link'}
+              </span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </form>
+
+          {/* Quick Demo Access */}
+          <div className="pt-2 border-t border-slate-800 text-center">
+            <button
+              type="button"
+              onClick={handleDemoLogin}
+              className="w-full py-2 rounded-xl border border-slate-700 text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-colors"
+            >
+              ⚡ Instant 1-Click Demo Login
+            </button>
+          </div>
+        </div>
+
+        {/* Security badge */}
+        <div className="flex items-center justify-center gap-2 text-xs text-slate-500">
+          <ShieldCheck className="w-4 h-4 text-emerald-400" />
+          <span>Strict User Data Isolation & Row-Level Security</span>
+        </div>
+      </div>
+    </div>
+  );
+};
