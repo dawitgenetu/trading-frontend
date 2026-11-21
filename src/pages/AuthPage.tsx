@@ -66,31 +66,29 @@ export const AuthPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0B1120] flex flex-col justify-center items-center p-4 selection:bg-brand selection:text-[#0B1120] bg-grid-pattern font-mono">
+    <div className="min-h-screen bg-dark-bg flex flex-col justify-center items-center p-4 selection:bg-brand-gold selection:text-brand-tealDark bg-grid-pattern">
       <div className="w-full max-w-md space-y-6">
-        {/* Brand with Image Logo */}
+        {/* Brand */}
         <div className="text-center space-y-3">
           <div className="flex justify-center">
             <img
               src="/logo.png"
               alt="Elite Trade Journal"
-              className="w-20 h-20 rounded-2xl object-contain shadow-2xl shadow-brand/25 border-2 border-brand/40 bg-[#0B1120] transition-transform hover:scale-105"
+              className="w-20 h-20 rounded-2xl object-contain shadow-2xl shadow-brand-gold/25 border-2 border-brand-gold/40 bg-brand-tealDark transition-transform hover:scale-105"
             />
           </div>
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-wider text-[#F8FAFC]">
-              ELITE TRADE JOURNAL
-            </h1>
-            <p className="text-xs text-[#94A3B8] mt-1">
-              Professional Quantitative Trading Terminal
-            </p>
-          </div>
+          <h1 className="text-2xl sm:text-3xl font-display font-bold tracking-tight text-white dark:text-brand-goldLight">
+            ELITE TRADE JOURNAL
+          </h1>
+          <p className="text-xs text-slate-400 font-mono">
+            Professional Trading Journal & Quantitative Performance Analytics
+          </p>
         </div>
 
         {/* Card */}
-        <div className="p-6 sm:p-8 rounded-3xl border border-slate-700/60 bg-[#1E293B]/95 shadow-2xl backdrop-blur-md space-y-5">
+        <div className="p-6 sm:p-8 rounded-3xl border border-brand-tealBorder bg-brand-tealSurface/95 shadow-2xl backdrop-blur-md space-y-5">
           {/* Tab Switcher */}
-          <div className="flex p-1 rounded-xl bg-[#0B1120]/80 border border-slate-700/60">
+          <div className="flex p-1 rounded-xl bg-dark-bg/80 border border-brand-tealBorder">
             <button
               type="button"
               onClick={() => {
@@ -100,8 +98,8 @@ export const AuthPage: React.FC = () => {
               }}
               className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
                 tab === 'login'
-                  ? 'bg-brand text-[#0B1120] shadow-sm'
-                  : 'text-slate-400 hover:text-[#F8FAFC]'
+                  ? 'bg-brand-gold text-brand-tealDark shadow-sm'
+                  : 'text-slate-400 hover:text-brand-goldLight'
               }`}
             >
               Sign In
@@ -115,8 +113,8 @@ export const AuthPage: React.FC = () => {
               }}
               className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
                 tab === 'register'
-                  ? 'bg-brand text-[#0B1120] shadow-sm'
-                  : 'text-slate-400 hover:text-[#F8FAFC]'
+                  ? 'bg-brand-gold text-brand-tealDark shadow-sm'
+                  : 'text-slate-400 hover:text-brand-goldLight'
               }`}
             >
               Register
@@ -142,13 +140,13 @@ export const AuthPage: React.FC = () => {
               <div>
                 <label className="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-goldMuted" />
                   <input
                     type="text"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Jane Trader"
-                    className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-slate-700/60 bg-[#0B1120]/80 text-[#F8FAFC] placeholder-slate-500 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/30"
+                    className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-brand-tealBorder bg-dark-bg/70 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30"
                     required={tab === 'register'}
                   />
                 </div>
@@ -158,13 +156,13 @@ export const AuthPage: React.FC = () => {
             <div>
               <label className="block text-xs font-semibold text-slate-300 mb-1">Email Address</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-goldMuted" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="trader@elitetradejournal.com"
-                  className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-slate-700/60 bg-[#0B1120]/80 text-[#F8FAFC] placeholder-slate-500 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/30 font-mono"
+                  className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-brand-tealBorder bg-dark-bg/70 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30 font-mono"
                   required
                 />
               </div>
@@ -178,20 +176,20 @@ export const AuthPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setTab('forgot')}
-                      className="text-[11px] text-brand hover:text-brand-hover"
+                      className="text-[11px] text-brand-gold hover:text-brand-goldLight"
                     >
                       Forgot?
                     </button>
                   )}
                 </div>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-goldMuted" />
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••••••"
-                    className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-slate-700/60 bg-[#0B1120]/80 text-[#F8FAFC] placeholder-slate-500 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/30 font-mono"
+                    className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-brand-tealBorder bg-dark-bg/70 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30 font-mono"
                     required={tab !== 'forgot'}
                   />
                 </div>
@@ -201,7 +199,7 @@ export const AuthPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-brand hover:bg-brand-hover text-[#0B1120] font-bold text-xs sm:text-sm transition-all shadow-lg shadow-brand/20 active:scale-[0.99]"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-brand-gold hover:bg-brand-goldLight text-brand-tealDark font-bold text-xs sm:text-sm transition-all shadow-lg shadow-brand-gold/20 active:scale-[0.99]"
             >
               <span>
                 {loading
@@ -217,11 +215,11 @@ export const AuthPage: React.FC = () => {
           </form>
 
           {/* Quick Demo Access */}
-          <div className="pt-2 border-t border-slate-700/60 text-center">
+          <div className="pt-2 border-t border-brand-tealBorder text-center">
             <button
               type="button"
               onClick={handleDemoLogin}
-              className="w-full py-2.5 rounded-xl border border-brand/40 text-xs font-semibold text-brand hover:bg-brand/10 transition-colors"
+              className="w-full py-2.5 rounded-xl border border-brand-gold/40 text-xs font-semibold text-brand-gold hover:bg-brand-gold/10 transition-colors"
             >
               ⚡ Instant 1-Click Demo Login
             </button>
@@ -230,7 +228,7 @@ export const AuthPage: React.FC = () => {
 
         {/* Security badge */}
         <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
-          <ShieldCheck className="w-4 h-4 text-brand" />
+          <ShieldCheck className="w-4 h-4 text-brand-gold" />
           <span>Strict User Data Isolation & Row-Level Security</span>
         </div>
       </div>

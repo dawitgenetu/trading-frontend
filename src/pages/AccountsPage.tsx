@@ -126,10 +126,11 @@ export const AccountsPage: React.FC = () => {
           return (
             <div
               key={acc.id}
-              className={`p-5 rounded-2xl border transition-all relative flex flex-col justify-between ${isSelected
-                ? 'border-brand-gold/60 bg-white dark:bg-brand-tealSurface shadow-lg shadow-brand-gold/10 ring-1 ring-brand-gold/30'
-                : 'border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-sm hover:border-brand-gold/30'
-                }`}
+              className={`p-5 rounded-2xl border transition-all relative flex flex-col justify-between ${
+                isSelected
+                  ? 'border-brand-gold/60 bg-white dark:bg-brand-tealSurface shadow-lg shadow-brand-gold/10 ring-1 ring-brand-gold/30'
+                  : 'border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-sm hover:border-brand-gold/30'
+              }`}
             >
               <div>
                 <div className="flex items-start justify-between mb-3">

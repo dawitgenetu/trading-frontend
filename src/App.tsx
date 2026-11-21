@@ -23,10 +23,10 @@ const AppContent: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0B1120] flex items-center justify-center font-mono">
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-9 h-9 border-3 border-brand border-t-transparent rounded-full animate-spin" />
-          <span className="text-xs text-[#94A3B8]">Loading Elite Trade Journal...</span>
+          <div className="w-8 h-8 border-3 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs text-slate-400 font-mono">Loading Elite Trade Journal...</span>
         </div>
       </div>
     );
