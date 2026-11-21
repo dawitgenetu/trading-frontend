@@ -100,7 +100,7 @@ export const AccountsPage: React.FC = () => {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-brand-goldLight">
+          <h1 className="text-2xl sm:text-3xl font-display font-bold tracking-tight text-slate-900 dark:text-brand-goldLight">
             Trading Accounts
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
@@ -136,11 +136,10 @@ export const AccountsPage: React.FC = () => {
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2">
                     <span
-                      className={`px-2 py-0.5 text-[10px] font-bold rounded-md uppercase ${
-                        acc.accountType === 'Live'
-                          ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
-                          : 'bg-amber-500/10 text-amber-500 border border-amber-500/20'
-                      }`}
+                      className={`px-2 py-0.5 text-[10px] font-bold rounded-md uppercase ${acc.accountType === 'Live'
+                        ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
+                        : 'bg-amber-500/10 text-amber-500 border border-amber-500/20'
+                        }`}
                     >
                       {acc.accountType}
                     </span>

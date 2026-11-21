@@ -117,7 +117,7 @@ export const RiskCenterPage: React.FC = () => {
     <div className="space-y-6">
       {/* Top Header */}
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-brand-goldLight">
+        <h1 className="text-2xl sm:text-3xl font-display font-bold tracking-tight text-slate-900 dark:text-brand-goldLight">
           Risk Management Center
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">

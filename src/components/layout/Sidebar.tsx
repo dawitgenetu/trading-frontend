@@ -58,14 +58,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
         }`}
       >
         {/* Logo / Header */}
-        <div className="flex items-center justify-between h-16 px-5 border-b border-slate-800/80 dark:border-brand-tealBorder bg-slate-950/40 dark:bg-dark-bg/60">
+        <div className="flex items-center justify-between h-16 px-5 border-b border-slate-800/80 dark:border-brand-tealBorder/80 bg-slate-950/40 dark:bg-dark-bg/80 backdrop-blur-md">
           <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-brand-teal text-brand-gold border border-brand-gold/40 shadow-lg shadow-brand-gold/15">
+            <div className="flex items-center justify-center w-9 h-9 rounded-xl bg-brand-teal text-brand-gold border border-brand-gold/40 shadow-lg shadow-brand-gold/15 transition-transform hover:scale-105">
               <TrendingUp className="w-5 h-5 stroke-[2.5]" />
             </div>
             <div>
-              <span className="font-bold tracking-tight text-white dark:text-brand-goldLight text-base">ELITE TRADE</span>
-              <span className="block text-[10px] font-semibold tracking-widest text-brand-gold uppercase">JOURNAL</span>
+              <span className="font-display font-bold tracking-wide text-white dark:text-brand-goldLight text-base">
+                ELITE TRADE
+              </span>
+              <span className="block text-[9px] font-bold tracking-[0.22em] text-brand-gold uppercase">
+                TERMINAL
+              </span>
             </div>
           </div>
           <button

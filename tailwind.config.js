@@ -51,8 +51,14 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['"Playfair Display"', 'Georgia', 'serif'],
+        mono: ['"JetBrains Mono"', 'Fira Code', 'monospace'],
+      },
+      boxShadow: {
+        'gold-glow': '0 0 25px -4px rgba(223, 214, 174, 0.25)',
+        'teal-glow': '0 0 35px -5px rgba(39, 66, 69, 0.4)',
+        'luxury': '0 10px 30px -10px rgba(11, 19, 21, 0.6), 0 0 0 1px rgba(46, 79, 83, 0.5)',
       }
     },
   },

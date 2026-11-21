@@ -254,11 +254,11 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
             <ArrowLeft className="w-4 h-4 text-slate-400" />
           </button>
           <div>
-            <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+            <h1 className="text-xl sm:text-2xl font-display font-bold tracking-tight text-slate-900 dark:text-brand-goldLight">
               {initialTrade ? 'Edit Trade' : 'Record New Trade'}
             </h1>
-            <p className="text-xs text-slate-500">
-              Clean, fast manual trade entry with instant risk & margin calculation
+            <p className="text-xs text-slate-400 mt-0.5">
+              Rapid manual trade entry with live pip, risk, & margin valuation
             </p>
           </div>
         </div>

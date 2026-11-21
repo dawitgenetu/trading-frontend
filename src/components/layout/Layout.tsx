@@ -12,7 +12,11 @@ export const Layout: React.FC<LayoutProps> = ({ currentTab, setCurrentTab, child
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100 flex">
+    <div className="min-h-screen bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-slate-100 flex relative overflow-x-hidden bg-grid-pattern">
+      {/* Ambient background glows for modern depth */}
+      <div className="fixed top-0 left-1/4 w-[480px] h-[480px] bg-brand-teal/20 rounded-full blur-[128px] pointer-events-none -z-10" />
+      <div className="fixed bottom-10 right-10 w-[400px] h-[400px] bg-brand-gold/[0.04] rounded-full blur-[140px] pointer-events-none -z-10" />
+
       {/* Sidebar Navigation */}
       <Sidebar
         currentTab={currentTab}
@@ -28,7 +32,7 @@ export const Layout: React.FC<LayoutProps> = ({ currentTab, setCurrentTab, child
           onOpenAddTrade={() => setCurrentTab('add-trade')}
         />
 
-        <main className="flex-1 p-4 lg:p-8 max-w-7xl w-full mx-auto">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto animate-fade-in">
           {children}
         </main>
       </div>

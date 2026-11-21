@@ -73,7 +73,7 @@ export const AuthPage: React.FC = () => {
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-brand-teal text-brand-gold border border-brand-gold/40 shadow-xl shadow-brand-gold/15">
             <TrendingUp className="w-8 h-8 stroke-[2.5]" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-white dark:text-brand-goldLight">
+          <h1 className="text-2xl sm:text-3xl font-display font-bold tracking-tight text-white dark:text-brand-goldLight">
             ELITE TRADE JOURNAL
           </h1>
           <p className="text-xs text-slate-400">
