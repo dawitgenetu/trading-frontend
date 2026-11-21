@@ -24,8 +24,8 @@ const MASTER_USER: Profile = {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<Profile | null>(MASTER_USER);
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<Profile | null>(null);
+  const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
@@ -39,6 +39,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [theme]);
 
   const fetchProfile = async () => {
+    const savedUserId = localStorage.getItem('etj_user_id');
+    const savedToken = localStorage.getItem('etj_token');
+
+    if (!savedUserId && !savedToken) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
     try {
       setLoading(true);
       const res = await api.getProfile();
@@ -48,18 +57,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setTheme(res.profile.theme);
         }
       } else {
-        throw new Error('No profile found');
+        setUser(null);
       }
     } catch (err) {
-      console.warn('Auto-initializing single user workspace:', err);
-      try {
-        await api.login('trader@elitetradejournal.com', 'password123');
-        const res2 = await api.getProfile();
-        if (res2.profile) setUser(res2.profile);
-      } catch (loginErr) {
-        // Fallback default single-trader profile so user never sees a login blocker
-        setUser(MASTER_USER);
-      }
+      console.warn('Session expired or invalid:', err);
+      api.setAuth(null, null);
+      setUser(null);
     } finally {
       setLoading(false);
     }
@@ -80,8 +83,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const logout = () => {
-    // Single personal user mode: always stay authenticated
-    setUser(MASTER_USER);
+    api.setAuth(null, null);
+    setUser(null);
   };
 
   const updateProfile = async (updates: Partial<Profile>) => {

@@ -15,8 +15,8 @@ class ApiService {
   private userId: string | null = null;
 
   constructor() {
-    this.token = localStorage.getItem('etj_token') || 'master-token-trader';
-    this.userId = localStorage.getItem('etj_user_id') || '5d3adecb-0882-45cb-9ab0-7acee068782e';
+    this.token = localStorage.getItem('etj_token');
+    this.userId = localStorage.getItem('etj_user_id');
   }
 
   setAuth(token: string | null, userId: string | null) {

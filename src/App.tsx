@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { AccountProvider } from './context/AccountContext';
 import { Layout } from './components/layout/Layout';
 import { DashboardPage } from './pages/DashboardPage';
@@ -13,11 +13,28 @@ import { AnalyticsPage } from './pages/AnalyticsPage';
 import { GoalsPage } from './pages/GoalsPage';
 import { CoachPage } from './pages/CoachPage';
 import { ReportsPage } from './pages/ReportsPage';
+import { AuthPage } from './pages/AuthPage';
 import type { Trade } from './types';
 
 const AppContent: React.FC = () => {
+  const { user, loading } = useAuth();
   const [currentTab, setCurrentTab] = useState<string>('dashboard');
   const [editingTrade, setEditingTrade] = useState<Trade | null>(null);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-3 border-indigo-500 border-t-transparent rounded-full animate-spin" />
+          <span className="text-xs text-slate-400 font-mono">Loading Elite Trade Journal...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <AuthPage />;
+  }
 
   const renderActiveTab = () => {
     switch (currentTab) {

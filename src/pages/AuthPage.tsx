@@ -52,9 +52,14 @@ export const AuthPage: React.FC = () => {
   const handleDemoLogin = async () => {
     try {
       setLoading(true);
-      await login('trader@elitetradejournal.com', 'password123');
+      setErrorMsg(null);
+      await login('elitetrader_1795040702205@test.com', 'password123');
     } catch (err: any) {
-      setErrorMsg(err.message);
+      try {
+        await login('trader@elitetradejournal.com', 'password123');
+      } catch (err2: any) {
+        setErrorMsg(err.message || 'Demo login failed');
+      }
     } finally {
       setLoading(false);
     }
