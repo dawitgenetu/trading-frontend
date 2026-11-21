@@ -2,13 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+:root, html.dark {
+  --color-brand: #D6A84B;
+  --color-background: #0B1120;
+  --color-card: #1E293B;
+  --color-profit: #10B981;
+  --color-loss: #EF4444;
+  --color-text: #F8FAFC;
+  --color-muted: #94A3B8;
+  font-family: 'JetBrains Mono', monospace;
+}
+
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 dark:bg-dark-bg dark:text-slate-100 font-sans antialiased min-h-screen selection:bg-brand-gold selection:text-brand-tealDark transition-colors duration-200 tracking-[-0.01em];
+    @apply bg-[#0B1120] text-[#F8FAFC] font-mono antialiased min-h-screen selection:bg-[#D6A84B] selection:text-[#0B1120] transition-colors duration-200 tracking-[-0.01em];
   }
 
   h1, h2, h3 {
-    @apply tracking-tight;
+    @apply tracking-tight font-mono;
   }
 }
 
@@ -19,49 +30,48 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #0B1120;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(47, 81, 85, 0.45);
+  background: rgba(214, 168, 75, 0.35);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(223, 214, 174, 0.55);
+  background: rgba(214, 168, 75, 0.7);
 }
 
-/* Trading subtle grid pattern with brand sapling gold hints */
+/* Subtle grid pattern with brand gold hints */
 .bg-grid-pattern {
-  background-image: radial-gradient(rgba(223, 214, 174, 0.07) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(214, 168, 75, 0.08) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
 @layer components {
   /* Luxury card styling */
   .luxury-card {
-    @apply rounded-2xl border border-brand-tealBorder/80 bg-brand-tealSurface/95 backdrop-blur-md transition-all duration-300;
-    box-shadow: 0 10px 30px -10px rgba(11, 19, 21, 0.6), 0 0 0 1px rgba(46, 79, 83, 0.5);
+    @apply rounded-2xl border border-slate-700/60 bg-[#1E293B]/90 backdrop-blur-md transition-all duration-300;
+    box-shadow: 0 10px 30px -10px rgba(11, 17, 32, 0.8), 0 0 0 1px rgba(51, 65, 85, 0.6);
   }
 
   .luxury-card:hover {
-    @apply border-brand-gold/40;
-    box-shadow: 0 0 25px -4px rgba(223, 214, 174, 0.25);
+    @apply border-brand/40;
+    box-shadow: 0 0 25px -4px rgba(214, 168, 75, 0.25);
   }
 
   /* Brand golden button */
   .btn-gold {
-    @apply px-4 py-2 rounded-xl bg-brand-gold text-brand-tealDark font-bold text-xs sm:text-sm hover:bg-brand-goldLight transition-all active:scale-95 flex items-center justify-center gap-2;
-    box-shadow: 0 4px 14px 0 rgba(223, 214, 174, 0.25);
+    @apply px-4 py-2 rounded-xl bg-brand text-[#0B1120] font-semibold text-xs sm:text-sm hover:bg-brand-hover transition-all active:scale-95 flex items-center justify-center gap-2;
+    box-shadow: 0 4px 14px 0 rgba(214, 168, 75, 0.25);
   }
 }
 
 /* Brand luxury gradient */
 .luxury-gradient {
-  background: linear-gradient(135deg, #1b3134 0%, #274245 50%, #15272a 100%);
+  background: linear-gradient(135deg, #0B1120 0%, #1E293B 50%, #0B1120 100%);
 }
 
-/* Editorial display accent font from the brand palette */
 .font-editorial {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'JetBrains Mono', monospace;
 }

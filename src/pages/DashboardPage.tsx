@@ -86,21 +86,21 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
   const calendarDays = data?.calendarDays || [];
 
   const winLossData = [
-    { name: 'Winning Trades', value: stats.winningTrades, color: '#34D399' },
-    { name: 'Losing Trades', value: stats.losingTrades, color: '#F87171' },
-    { name: 'Break Even', value: stats.breakEvenTrades || 0, color: '#DFD6AE' },
+    { name: 'Winning Trades', value: stats.winningTrades, color: '#10B981' },
+    { name: 'Losing Trades', value: stats.losingTrades, color: '#EF4444' },
+    { name: 'Break Even', value: stats.breakEvenTrades || 0, color: '#D6A84B' },
   ].filter((d) => d.value > 0);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 font-mono">
       {/* Top Header & Date Filter Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-slate-200 dark:border-brand-tealBorder/80">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-3 border-b border-slate-700/60">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-display font-bold tracking-tight text-slate-900 dark:text-brand-goldLight">
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#F8FAFC]">
             Performance Dashboard
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-            Real-time quantitative analytics • <span className="text-brand-gold font-medium">{selectedAccount?.name || 'All Accounts'}</span>
+          <p className="text-xs sm:text-sm text-[#94A3B8] mt-0.5">
+            Real-time quantitative analytics • <span className="text-brand font-medium">{selectedAccount?.name || 'All Accounts'}</span>
           </p>
         </div>
 
@@ -120,8 +120,8 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
               onClick={() => setDateRange(pill.id)}
               className={`px-3 py-1.5 text-xs font-semibold rounded-xl transition-all whitespace-nowrap ${
                 dateRange === pill.id
-                  ? 'bg-brand-gold text-brand-tealDark font-bold shadow-md shadow-brand-gold/25'
-                  : 'bg-white dark:bg-brand-tealSurface border border-slate-200 dark:border-brand-tealBorder text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-brand-tealHover'
+                  ? 'bg-brand text-[#0B1120] font-bold shadow-md shadow-brand/25'
+                  : 'bg-[#1E293B] border border-slate-700/60 text-[#94A3B8] hover:bg-[#25344D] hover:text-[#F8FAFC]'
               }`}
             >
               {pill.label}
@@ -164,39 +164,39 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
 
       {/* Secondary Metrics Row */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        <div className="p-3.5 rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-sm">
-          <div className="text-[11px] font-semibold text-slate-400 uppercase">Gross Profit</div>
-          <div className="text-base sm:text-lg font-bold font-mono text-emerald-400 mt-1">
+        <div className="p-3.5 rounded-xl border border-slate-700/60 bg-[#1E293B] shadow-sm">
+          <div className="text-[11px] font-semibold text-[#94A3B8] uppercase">Gross Profit</div>
+          <div className="text-base sm:text-lg font-bold font-mono text-[#10B981] mt-1">
             {formatCurrency(stats.grossProfit)}
           </div>
         </div>
-        <div className="p-3.5 rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-sm">
-          <div className="text-[11px] font-semibold text-slate-400 uppercase">Gross Loss</div>
-          <div className="text-base sm:text-lg font-bold font-mono text-rose-400 mt-1">
+        <div className="p-3.5 rounded-xl border border-slate-700/60 bg-[#1E293B] shadow-sm">
+          <div className="text-[11px] font-semibold text-[#94A3B8] uppercase">Gross Loss</div>
+          <div className="text-base sm:text-lg font-bold font-mono text-[#EF4444] mt-1">
             {formatCurrency(stats.grossLoss)}
           </div>
         </div>
-        <div className="p-3.5 rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-sm">
-          <div className="text-[11px] font-semibold text-slate-400 uppercase">Average Win</div>
-          <div className="text-base sm:text-lg font-bold font-mono text-emerald-400 mt-1">
+        <div className="p-3.5 rounded-xl border border-slate-700/60 bg-[#1E293B] shadow-sm">
+          <div className="text-[11px] font-semibold text-[#94A3B8] uppercase">Average Win</div>
+          <div className="text-base sm:text-lg font-bold font-mono text-[#10B981] mt-1">
             {formatCurrency(stats.averageWin)}
           </div>
         </div>
-        <div className="p-3.5 rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-sm">
-          <div className="text-[11px] font-semibold text-slate-400 uppercase">Average Loss</div>
-          <div className="text-base sm:text-lg font-bold font-mono text-rose-400 mt-1">
+        <div className="p-3.5 rounded-xl border border-slate-700/60 bg-[#1E293B] shadow-sm">
+          <div className="text-[11px] font-semibold text-[#94A3B8] uppercase">Average Loss</div>
+          <div className="text-base sm:text-lg font-bold font-mono text-[#EF4444] mt-1">
             {formatCurrency(stats.averageLoss)}
           </div>
         </div>
-        <div className="p-3.5 rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-sm">
-          <div className="text-[11px] font-semibold text-slate-400 uppercase">Avg Risk/Reward</div>
-          <div className="text-base sm:text-lg font-bold font-mono text-brand-gold mt-1">
+        <div className="p-3.5 rounded-xl border border-slate-700/60 bg-[#1E293B] shadow-sm">
+          <div className="text-[11px] font-semibold text-[#94A3B8] uppercase">Avg Risk/Reward</div>
+          <div className="text-base sm:text-lg font-bold font-mono text-brand mt-1">
             {stats.averageRr ? `${stats.averageRr}R` : '0R'}
           </div>
         </div>
-        <div className="p-3.5 rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-sm">
-          <div className="text-[11px] font-semibold text-slate-400 uppercase">Max Drawdown</div>
-          <div className="text-base sm:text-lg font-bold font-mono text-brand-goldDark mt-1">
+        <div className="p-3.5 rounded-xl border border-slate-700/60 bg-[#1E293B] shadow-sm">
+          <div className="text-[11px] font-semibold text-[#94A3B8] uppercase">Max Drawdown</div>
+          <div className="text-base sm:text-lg font-bold font-mono text-brand mt-1">
             {stats.maxDrawdownPercentage}%
           </div>
         </div>
@@ -205,15 +205,15 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
       {/* Main Charts: Equity Curve & Daily P/L */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Equity Curve (2 cols) */}
-        <div className="lg:col-span-2 p-5 rounded-2xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-md">
+        <div className="lg:col-span-2 p-5 rounded-2xl border border-slate-700/60 bg-[#1E293B] shadow-md">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-base font-bold text-slate-900 dark:text-brand-goldLight">Equity Curve</h2>
-              <p className="text-xs text-slate-400">Cumulative account growth over time</p>
+              <h2 className="text-base font-bold text-[#F8FAFC]">Equity Curve</h2>
+              <p className="text-xs text-[#94A3B8]">Cumulative account growth over time</p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-brand-gold"></span>
-              <span className="text-xs text-brand-gold font-mono">Realized Equity</span>
+              <span className="w-2.5 h-2.5 rounded-full bg-brand"></span>
+              <span className="text-xs text-brand font-mono">Realized Equity</span>
             </div>
           </div>
 
@@ -223,19 +223,19 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
                 <AreaChart data={equityCurve} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <defs>
                     <linearGradient id="equityGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#DFD6AE" stopOpacity={0.45} />
-                      <stop offset="95%" stopColor="#274245" stopOpacity={0.0} />
+                      <stop offset="5%" stopColor="#D6A84B" stopOpacity={0.45} />
+                      <stop offset="95%" stopColor="#1E293B" stopOpacity={0.0} />
                     </linearGradient>
                   </defs>
                   <XAxis
                     dataKey="date"
-                    stroke="#8B9DA0"
+                    stroke="#94A3B8"
                     fontSize={11}
                     tickLine={false}
                     tickFormatter={(str) => str.substring(5)}
                   />
                   <YAxis
-                    stroke="#8B9DA0"
+                    stroke="#94A3B8"
                     fontSize={11}
                     tickLine={false}
                     domain={['dataMin - 100', 'dataMax + 100']}
@@ -243,10 +243,10 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
                   />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#122022',
-                      borderColor: '#2e4f53',
+                      backgroundColor: '#0B1120',
+                      borderColor: '#334155',
                       borderRadius: '12px',
-                      color: '#DFD6AE',
+                      color: '#D6A84B',
                       fontSize: '12px',
                     }}
                     formatter={(val: any) => [`$${Number(val).toFixed(2)}`, 'Equity']}
@@ -254,7 +254,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
                   <Area
                     type="monotone"
                     dataKey="equity"
-                    stroke="#DFD6AE"
+                    stroke="#D6A84B"
                     strokeWidth={2.5}
                     fillOpacity={1}
                     fill="url(#equityGradient)"
@@ -270,10 +270,10 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
         </div>
 
         {/* Win/Loss Distribution (1 col) */}
-        <div className="p-5 rounded-2xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-md flex flex-col justify-between">
+        <div className="p-5 rounded-2xl border border-slate-700/60 bg-[#1E293B] shadow-md flex flex-col justify-between">
           <div>
-            <h2 className="text-base font-bold text-slate-900 dark:text-brand-goldLight">Win vs Loss Outcome</h2>
-            <p className="text-xs text-slate-400">Trade distribution ratio</p>
+            <h2 className="text-base font-bold text-[#F8FAFC]">Win vs Loss Outcome</h2>
+            <p className="text-xs text-[#94A3B8]">Trade distribution ratio</p>
           </div>
 
           <div className="h-56 w-full my-auto flex items-center justify-center">
@@ -293,10 +293,10 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
                   </Pie>
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#122022',
-                      borderColor: '#2e4f53',
+                      backgroundColor: '#0B1120',
+                      borderColor: '#334155',
                       borderRadius: '12px',
-                      color: '#DFD6AE',
+                      color: '#D6A84B',
                       fontSize: '12px',
                     }}
                   />
@@ -307,14 +307,14 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
             )}
           </div>
 
-          <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-100 dark:border-brand-tealBorder">
+          <div className="grid grid-cols-2 gap-2 pt-3 border-t border-slate-700/60">
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-md bg-emerald-400"></span>
-              <span className="text-xs text-slate-300">Wins ({stats.winningTrades})</span>
+              <span className="w-3 h-3 rounded-md bg-[#10B981]"></span>
+              <span className="text-xs text-[#F8FAFC]">Wins ({stats.winningTrades})</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-md bg-rose-400"></span>
-              <span className="text-xs text-slate-300">Losses ({stats.losingTrades})</span>
+              <span className="w-3 h-3 rounded-md bg-[#EF4444]"></span>
+              <span className="text-xs text-[#F8FAFC]">Losses ({stats.losingTrades})</span>
             </div>
           </div>
         </div>
@@ -323,13 +323,13 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
       {/* Daily P/L Bar Chart & Session Performance */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Daily P&L */}
-        <div className="p-5 rounded-2xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-md">
+        <div className="p-5 rounded-2xl border border-slate-700/60 bg-[#1E293B] shadow-md">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-base font-bold text-slate-900 dark:text-brand-goldLight">Daily Profit & Loss</h2>
-              <p className="text-xs text-slate-400">Net realized P/L per calendar day</p>
+              <h2 className="text-base font-bold text-[#F8FAFC]">Daily Profit & Loss</h2>
+              <p className="text-xs text-[#94A3B8]">Net realized P/L per calendar day</p>
             </div>
-            <span className="text-xs text-brand-gold font-mono">{dailyPnl.length} Trading Days</span>
+            <span className="text-xs text-brand font-mono">{dailyPnl.length} Trading Days</span>
           </div>
 
           <div className="h-64 w-full">
@@ -338,18 +338,18 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
                 <BarChart data={dailyPnl} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <XAxis
                     dataKey="date"
-                    stroke="#8B9DA0"
+                    stroke="#94A3B8"
                     fontSize={11}
                     tickLine={false}
                     tickFormatter={(str) => str.substring(5)}
                   />
-                  <YAxis stroke="#8B9DA0" fontSize={11} tickLine={false} tickFormatter={(v) => `$${v}`} />
+                  <YAxis stroke="#94A3B8" fontSize={11} tickLine={false} tickFormatter={(v) => `$${v}`} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#122022',
-                      borderColor: '#2e4f53',
+                      backgroundColor: '#0B1120',
+                      borderColor: '#334155',
                       borderRadius: '12px',
-                      color: '#DFD6AE',
+                      color: '#D6A84B',
                       fontSize: '12px',
                     }}
                     formatter={(val: any) => [`$${Number(val).toFixed(2)}`, 'Net P/L']}
@@ -358,7 +358,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
                     {dailyPnl.map((entry: any, index: number) => (
                       <Cell
                         key={`bar-${index}`}
-                        fill={entry.netPnl >= 0 ? '#34D399' : '#F87171'}
+                        fill={entry.netPnl >= 0 ? '#10B981' : '#EF4444'}
                       />
                     ))}
                   </Bar>
@@ -373,15 +373,15 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
         </div>
 
         {/* Session Performance */}
-        <div className="p-5 rounded-2xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-md">
+        <div className="p-5 rounded-2xl border border-slate-700/60 bg-[#1E293B] shadow-md">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h2 className="text-base font-bold text-slate-900 dark:text-brand-goldLight">Session Performance</h2>
-              <p className="text-xs text-slate-400">Asian, London, New York, Sydney</p>
+              <h2 className="text-base font-bold text-[#F8FAFC]">Session Performance</h2>
+              <p className="text-xs text-[#94A3B8]">Asian, London, New York, Sydney</p>
             </div>
             <button
               onClick={() => onNavigate('analytics')}
-              className="text-xs text-brand-gold hover:text-brand-goldLight font-semibold"
+              className="text-xs text-brand hover:underline font-semibold"
             >
               View Analytics →
             </button>
@@ -396,14 +396,14 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
               };
 
               return (
-                <div key={sessName} className="p-3 rounded-xl bg-slate-50 dark:bg-dark-bg/60 border border-slate-200/60 dark:border-brand-tealBorder/60 flex items-center justify-between">
+                <div key={sessName} className="p-3 rounded-xl bg-[#0B1120]/60 border border-slate-700/60 flex items-center justify-between">
                   <div>
-                    <div className="text-xs font-bold text-slate-900 dark:text-white">{sessName} Session</div>
-                    <div className="text-[11px] text-slate-400">
+                    <div className="text-xs font-bold text-[#F8FAFC]">{sessName} Session</div>
+                    <div className="text-[11px] text-[#94A3B8]">
                       {match.tradesCount} Trades • {match.winRate}% Win Rate
                     </div>
                   </div>
-                  <div className={`text-sm font-bold font-mono ${match.netPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                  <div className={`text-sm font-bold font-mono ${match.netPnl >= 0 ? 'text-[#10B981]' : 'text-[#EF4444]'}`}>
                     {match.netPnl >= 0 ? '+' : ''}{formatCurrency(match.netPnl)}
                   </div>
                 </div>
@@ -414,15 +414,15 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
       </div>
 
       {/* Mini Trading Calendar Heatmap Preview */}
-      <div className="p-5 rounded-2xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-md">
+      <div className="p-5 rounded-2xl border border-slate-700/60 bg-[#1E293B] shadow-md">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-brand-gold" />
-            <h2 className="text-base font-bold text-slate-900 dark:text-brand-goldLight">Recent Trading Days Heatmap</h2>
+            <Calendar className="w-4 h-4 text-brand" />
+            <h2 className="text-base font-bold text-[#F8FAFC]">Recent Trading Days Heatmap</h2>
           </div>
           <button
             onClick={() => onNavigate('calendar')}
-            className="text-xs text-brand-gold hover:text-brand-goldLight font-semibold"
+            className="text-xs text-brand hover:underline font-semibold"
           >
             Open Full Calendar →
           </button>
@@ -435,13 +435,13 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
               onClick={() => onNavigate('calendar')}
               className={`p-2.5 rounded-xl border text-center cursor-pointer transition-all hover:scale-105 ${
                 day.pnl > 0
-                  ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                  ? 'bg-[#10B981]/10 border-[#10B981]/30 text-[#10B981]'
                   : day.pnl < 0
-                  ? 'bg-rose-500/10 border-rose-500/30 text-rose-400'
-                  : 'bg-brand-tealSurface/80 border-brand-tealBorder/80 text-slate-400'
+                  ? 'bg-[#EF4444]/10 border-[#EF4444]/30 text-[#EF4444]'
+                  : 'bg-[#1E293B]/80 border-slate-700/60 text-[#94A3B8]'
               }`}
             >
-              <div className="text-[10px] text-slate-400">{day.date.substring(5)}</div>
+              <div className="text-[10px] text-[#94A3B8]">{day.date.substring(5)}</div>
               <div className="text-xs font-bold font-mono my-0.5">
                 {day.pnl >= 0 ? '+' : ''}${Math.round(day.pnl)}
               </div>
@@ -449,7 +449,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
             </div>
           ))}
           {calendarDays.length === 0 && (
-            <div className="col-span-full py-6 text-center text-sm text-slate-400">
+            <div className="col-span-full py-6 text-center text-sm text-[#94A3B8]">
               No recent trade activity recorded. Click "+ Add Trade" above to log your first trade!
             </div>
           )}

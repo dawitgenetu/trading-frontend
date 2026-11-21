@@ -21,42 +21,40 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   const getVariantStyles = () => {
     switch (variant) {
       case 'profit':
-        return 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400';
+        return 'border-[#10B981]/30 bg-[#10B981]/10 text-[#10B981]';
       case 'loss':
-        return 'border-red-500/30 bg-red-500/10 text-red-400';
+        return 'border-[#EF4444]/30 bg-[#EF4444]/10 text-[#EF4444]';
       case 'indigo':
-        return 'border-brand-gold/30 bg-brand-gold/10 text-brand-gold';
       case 'amber':
       case 'gold':
-        return 'border-brand-gold/35 bg-brand-gold/15 text-brand-gold';
+        return 'border-brand/35 bg-brand/15 text-brand';
       default:
-        return 'border-brand-tealBorder bg-brand-tealSurface text-brand-goldLight';
+        return 'border-slate-700/60 bg-[#1E293B] text-brand';
     }
   };
 
   const getValueColor = () => {
     switch (variant) {
       case 'profit':
-        return 'text-emerald-500 dark:text-emerald-400';
+        return 'text-[#10B981]';
       case 'loss':
-        return 'text-red-500 dark:text-red-400';
+        return 'text-[#EF4444]';
       case 'indigo':
-        return 'text-brand-gold dark:text-brand-goldLight';
       case 'amber':
       case 'gold':
-        return 'text-brand-goldDark dark:text-brand-gold';
+        return 'text-brand';
       default:
-        return 'text-slate-900 dark:text-white';
+        return 'text-[#F8FAFC]';
     }
   };
 
   return (
     <div
       title={tooltip}
-      className="p-4 rounded-2xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-md hover:border-brand-gold/40 transition-all hover:shadow-brand-gold/5"
+      className="p-4 rounded-2xl border border-slate-700/60 bg-[#1E293B] shadow-md hover:border-brand/40 transition-all hover:shadow-brand/5 font-mono"
     >
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+        <span className="text-xs font-semibold text-[#94A3B8] uppercase tracking-wider">
           {label}
         </span>
         {Icon && (
@@ -71,7 +69,7 @@ export const MetricCard: React.FC<MetricCardProps> = ({
           {value}
         </span>
         {subValue && (
-          <span className="text-xs font-medium text-slate-400">
+          <span className="text-xs font-medium text-[#94A3B8]">
             {subValue}
           </span>
         )}
