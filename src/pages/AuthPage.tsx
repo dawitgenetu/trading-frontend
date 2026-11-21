@@ -49,22 +49,6 @@ export const AuthPage: React.FC = () => {
     }
   };
 
-  const handleDemoLogin = async () => {
-    try {
-      setLoading(true);
-      setErrorMsg(null);
-      await login('elitetrader_1795040702205@test.com', 'password123');
-    } catch (err: any) {
-      try {
-        await login('trader@elitetradejournal.com', 'password123');
-      } catch (err2: any) {
-        setErrorMsg(err.message || 'Demo login failed');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-dark-bg flex flex-col justify-center items-center p-4 selection:bg-brand-gold selection:text-brand-tealDark bg-grid-pattern">
       <div className="w-full max-w-md space-y-6">
@@ -213,17 +197,6 @@ export const AuthPage: React.FC = () => {
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
-
-          {/* Quick Demo Access */}
-          <div className="pt-2 border-t border-brand-tealBorder text-center">
-            <button
-              type="button"
-              onClick={handleDemoLogin}
-              className="w-full py-2.5 rounded-xl border border-brand-gold/40 text-xs font-semibold text-brand-gold hover:bg-brand-gold/10 transition-colors"
-            >
-              ⚡ Instant 1-Click Demo Login
-            </button>
-          </div>
         </div>
 
         {/* Security badge */}
