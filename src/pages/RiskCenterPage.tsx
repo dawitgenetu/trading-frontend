@@ -117,7 +117,7 @@ export const RiskCenterPage: React.FC = () => {
     <div className="space-y-6">
       {/* Top Header */}
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+        <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-brand-goldLight">
           Risk Management Center
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
@@ -144,21 +144,21 @@ export const RiskCenterPage: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* LEFT: Position Sizing Calculator (7 cols) */}
-        <div className="lg:col-span-7 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-card shadow-sm space-y-5">
+        <div className="lg:col-span-7 p-5 rounded-2xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-md space-y-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Calculator className="w-5 h-5 text-indigo-500" />
-              <h2 className="text-base font-bold text-slate-900 dark:text-white">
+              <Calculator className="w-5 h-5 text-brand-gold" />
+              <h2 className="text-base font-bold text-slate-900 dark:text-brand-goldLight">
                 Advanced Position Sizing Calculator
               </h2>
             </div>
-            <span className="text-[11px] font-mono text-indigo-400">Precision Math</span>
+            <span className="text-[11px] font-mono text-brand-gold">Precision Math</span>
           </div>
 
           <div className="space-y-4">
             {/* Quick Instrument Presets */}
             <div>
-              <span className="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1.5">
+              <span className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">
                 Quick Instrument Select
               </span>
               <div className="grid grid-cols-3 gap-2">
@@ -172,12 +172,12 @@ export const RiskCenterPage: React.FC = () => {
                   }}
                   className={`px-3 py-2 text-xs font-bold rounded-xl border text-center transition-all ${
                     symbol === 'XAUUSD'
-                      ? 'border-amber-500 bg-amber-500/10 text-amber-400 shadow-sm'
-                      : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-slate-600 dark:text-slate-300 hover:border-amber-500/50'
+                      ? 'border-brand-gold bg-brand-gold text-brand-tealDark shadow-md shadow-brand-gold/20'
+                      : 'border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/60 text-slate-600 dark:text-slate-300 hover:border-brand-gold/50'
                   }`}
                 >
                   <span className="block font-mono">XAUUSD</span>
-                  <span className="text-[10px] text-slate-400 font-normal">Gold (100oz)</span>
+                  <span className={`text-[10px] font-normal ${symbol === 'XAUUSD' ? 'text-brand-tealDark/80' : 'text-slate-400'}`}>Gold (100oz)</span>
                 </button>
 
                 <button
@@ -190,12 +190,12 @@ export const RiskCenterPage: React.FC = () => {
                   }}
                   className={`px-3 py-2 text-xs font-bold rounded-xl border text-center transition-all ${
                     symbol === 'EURUSD'
-                      ? 'border-indigo-500 bg-indigo-500/10 text-indigo-400 shadow-sm'
-                      : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-slate-600 dark:text-slate-300 hover:border-indigo-500/50'
+                      ? 'border-brand-gold bg-brand-gold text-brand-tealDark shadow-md shadow-brand-gold/20'
+                      : 'border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/60 text-slate-600 dark:text-slate-300 hover:border-brand-gold/50'
                   }`}
                 >
                   <span className="block font-mono">EURUSD</span>
-                  <span className="text-[10px] text-slate-400 font-normal">Euro / USD</span>
+                  <span className={`text-[10px] font-normal ${symbol === 'EURUSD' ? 'text-brand-tealDark/80' : 'text-slate-400'}`}>Forex (100k)</span>
                 </button>
 
                 <button
@@ -207,13 +207,13 @@ export const RiskCenterPage: React.FC = () => {
                     setTakeProfit('1.30300');
                   }}
                   className={`px-3 py-2 text-xs font-bold rounded-xl border text-center transition-all ${
-                    symbol === 'GBPUSD' || symbol === 'GPUUSD'
-                      ? 'border-blue-500 bg-blue-500/10 text-blue-400 shadow-sm'
-                      : 'border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 text-slate-600 dark:text-slate-300 hover:border-blue-500/50'
+                    symbol === 'GBPUSD'
+                      ? 'border-brand-gold bg-brand-gold text-brand-tealDark shadow-md shadow-brand-gold/20'
+                      : 'border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/60 text-slate-600 dark:text-slate-300 hover:border-brand-gold/50'
                   }`}
                 >
                   <span className="block font-mono">GBPUSD</span>
-                  <span className="text-[10px] text-slate-400 font-normal">Pound / USD</span>
+                  <span className={`text-[10px] font-normal ${symbol === 'GBPUSD' ? 'text-brand-tealDark/80' : 'text-slate-400'}`}>Cable (100k)</span>
                 </button>
               </div>
             </div>

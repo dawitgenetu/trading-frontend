@@ -66,25 +66,25 @@ export const AuthPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 flex flex-col justify-center items-center p-4 selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen bg-dark-bg flex flex-col justify-center items-center p-4 selection:bg-brand-gold selection:text-brand-tealDark bg-grid-pattern">
       <div className="w-full max-w-md space-y-6">
         {/* Brand */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-600 to-indigo-400 text-white shadow-xl shadow-indigo-500/25">
-            <TrendingUp className="w-7 h-7 stroke-[2.5]" />
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-brand-teal text-brand-gold border border-brand-gold/40 shadow-xl shadow-brand-gold/15">
+            <TrendingUp className="w-8 h-8 stroke-[2.5]" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">
+          <h1 className="text-2xl font-bold tracking-tight text-white dark:text-brand-goldLight">
             ELITE TRADE JOURNAL
           </h1>
           <p className="text-xs text-slate-400">
-            Professional Manual Trading Journal & Analytics System
+            Professional Trading Journal & Quantitative Performance Analytics
           </p>
         </div>
 
         {/* Card */}
-        <div className="p-6 sm:p-8 rounded-3xl border border-slate-800 bg-slate-900/90 shadow-2xl backdrop-blur-md space-y-5">
+        <div className="p-6 sm:p-8 rounded-3xl border border-brand-tealBorder bg-brand-tealSurface/95 shadow-2xl backdrop-blur-md space-y-5">
           {/* Tab Switcher */}
-          <div className="flex p-1 rounded-xl bg-slate-950/60 border border-slate-800">
+          <div className="flex p-1 rounded-xl bg-dark-bg/80 border border-brand-tealBorder">
             <button
               type="button"
               onClick={() => {
@@ -92,10 +92,10 @@ export const AuthPage: React.FC = () => {
                 setErrorMsg(null);
                 setSuccessMsg(null);
               }}
-              className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+              className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
                 tab === 'login'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-brand-gold text-brand-tealDark shadow-sm'
+                  : 'text-slate-400 hover:text-brand-goldLight'
               }`}
             >
               Sign In
@@ -107,10 +107,10 @@ export const AuthPage: React.FC = () => {
                 setErrorMsg(null);
                 setSuccessMsg(null);
               }}
-              className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+              className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${
                 tab === 'register'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-white'
+                  ? 'bg-brand-gold text-brand-tealDark shadow-sm'
+                  : 'text-slate-400 hover:text-brand-goldLight'
               }`}
             >
               Register
@@ -134,15 +134,15 @@ export const AuthPage: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             {tab === 'register' && (
               <div>
-                <label className="block text-xs font-medium text-slate-300 mb-1">Full Name</label>
+                <label className="block text-xs font-semibold text-slate-300 mb-1">Full Name</label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-goldMuted" />
                   <input
                     type="text"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Jane Trader"
-                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950/60 text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-brand-tealBorder bg-dark-bg/70 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30"
                     required={tab === 'register'}
                   />
                 </div>
@@ -150,15 +150,15 @@ export const AuthPage: React.FC = () => {
             )}
 
             <div>
-              <label className="block text-xs font-medium text-slate-300 mb-1">Email Address</label>
+              <label className="block text-xs font-semibold text-slate-300 mb-1">Email Address</label>
               <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-goldMuted" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="trader@elitetradejournal.com"
-                  className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950/60 text-white focus:outline-none focus:border-indigo-500 font-mono"
+                  className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-brand-tealBorder bg-dark-bg/70 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30 font-mono"
                   required
                 />
               </div>
@@ -167,25 +167,25 @@ export const AuthPage: React.FC = () => {
             {tab !== 'forgot' && (
               <div>
                 <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-medium text-slate-300">Password</label>
+                  <label className="text-xs font-semibold text-slate-300">Password</label>
                   {tab === 'login' && (
                     <button
                       type="button"
                       onClick={() => setTab('forgot')}
-                      className="text-[11px] text-indigo-400 hover:text-indigo-300"
+                      className="text-[11px] text-brand-gold hover:text-brand-goldLight"
                     >
                       Forgot?
                     </button>
                   )}
                 </div>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-goldMuted" />
                   <input
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••••••"
-                    className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-slate-700 bg-slate-950/60 text-white focus:outline-none focus:border-indigo-500 font-mono"
+                    className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border border-brand-tealBorder bg-dark-bg/70 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold/30 font-mono"
                     required={tab !== 'forgot'}
                   />
                 </div>
@@ -195,7 +195,7 @@ export const AuthPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs transition-all shadow-md shadow-indigo-600/30"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-brand-gold hover:bg-brand-goldLight text-brand-tealDark font-bold text-xs sm:text-sm transition-all shadow-lg shadow-brand-gold/20 active:scale-[0.99]"
             >
               <span>
                 {loading
@@ -211,11 +211,11 @@ export const AuthPage: React.FC = () => {
           </form>
 
           {/* Quick Demo Access */}
-          <div className="pt-2 border-t border-slate-800 text-center">
+          <div className="pt-2 border-t border-brand-tealBorder text-center">
             <button
               type="button"
               onClick={handleDemoLogin}
-              className="w-full py-2 rounded-xl border border-slate-700 text-xs font-semibold text-slate-300 hover:bg-slate-800 transition-colors"
+              className="w-full py-2.5 rounded-xl border border-brand-gold/40 text-xs font-semibold text-brand-gold hover:bg-brand-gold/10 transition-colors"
             >
               ⚡ Instant 1-Click Demo Login
             </button>
@@ -223,8 +223,8 @@ export const AuthPage: React.FC = () => {
         </div>
 
         {/* Security badge */}
-        <div className="flex items-center justify-center gap-2 text-xs text-slate-500">
-          <ShieldCheck className="w-4 h-4 text-emerald-400" />
+        <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
+          <ShieldCheck className="w-4 h-4 text-brand-gold" />
           <span>Strict User Data Isolation & Row-Level Security</span>
         </div>
       </div>

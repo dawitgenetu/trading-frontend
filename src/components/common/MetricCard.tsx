@@ -6,7 +6,7 @@ interface MetricCardProps {
   value: string | number;
   subValue?: string;
   icon?: LucideIcon;
-  variant?: 'default' | 'profit' | 'loss' | 'indigo' | 'amber';
+  variant?: 'default' | 'profit' | 'loss' | 'indigo' | 'amber' | 'gold';
   tooltip?: string;
 }
 
@@ -21,15 +21,16 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   const getVariantStyles = () => {
     switch (variant) {
       case 'profit':
-        return 'border-emerald-500/30 bg-emerald-500/5 text-emerald-500';
+        return 'border-emerald-500/30 bg-emerald-500/10 text-emerald-400';
       case 'loss':
-        return 'border-red-500/30 bg-red-500/5 text-red-500';
+        return 'border-red-500/30 bg-red-500/10 text-red-400';
       case 'indigo':
-        return 'border-indigo-500/30 bg-indigo-500/5 text-indigo-500';
+        return 'border-brand-gold/30 bg-brand-gold/10 text-brand-gold';
       case 'amber':
-        return 'border-amber-500/30 bg-amber-500/5 text-amber-500';
+      case 'gold':
+        return 'border-brand-gold/35 bg-brand-gold/15 text-brand-gold';
       default:
-        return 'border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-card text-slate-400';
+        return 'border-brand-tealBorder bg-brand-tealSurface text-brand-goldLight';
     }
   };
 
@@ -40,9 +41,10 @@ export const MetricCard: React.FC<MetricCardProps> = ({
       case 'loss':
         return 'text-red-500 dark:text-red-400';
       case 'indigo':
-        return 'text-indigo-600 dark:text-indigo-400';
+        return 'text-brand-gold dark:text-brand-goldLight';
       case 'amber':
-        return 'text-amber-600 dark:text-amber-400';
+      case 'gold':
+        return 'text-brand-goldDark dark:text-brand-gold';
       default:
         return 'text-slate-900 dark:text-white';
     }
@@ -51,10 +53,10 @@ export const MetricCard: React.FC<MetricCardProps> = ({
   return (
     <div
       title={tooltip}
-      className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-dark-card shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all"
+      className="p-4 rounded-2xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-md hover:border-brand-gold/40 transition-all hover:shadow-brand-gold/5"
     >
       <div className="flex items-center justify-between mb-2">
-        <span className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+        <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
           {label}
         </span>
         {Icon && (

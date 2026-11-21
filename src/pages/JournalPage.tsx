@@ -140,7 +140,7 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
       {/* Top Header & Quick Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-brand-goldLight">
             Trading Journal
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
@@ -151,14 +151,14 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
         <div className="flex items-center gap-2">
           <button
             onClick={handleExportCsv}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-card text-xs font-semibold hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface text-xs font-semibold hover:border-brand-gold/40 text-brand-gold transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
           </button>
           <button
             onClick={onAddTrade}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-md shadow-indigo-600/25 transition-all"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-gold hover:bg-brand-goldLight text-brand-tealDark font-bold text-xs sm:text-sm shadow-md shadow-brand-gold/25 transition-all"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
             <span>Add Trade</span>
@@ -167,16 +167,16 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-dark-card shadow-sm flex flex-col md:flex-row gap-3 items-center justify-between">
+      <div className="p-4 rounded-2xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-md flex flex-col md:flex-row gap-3 items-center justify-between">
         {/* Search Input */}
         <div className="relative w-full md:w-72">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-goldMuted" />
           <input
             type="text"
             placeholder="Search symbol, notes, strategy..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-900/60 focus:outline-none focus:border-indigo-500"
+            className="w-full pl-9 pr-3 py-1.5 text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/80 focus:outline-none focus:border-brand-gold text-slate-900 dark:text-white placeholder:text-slate-500"
           />
         </div>
 
@@ -185,7 +185,7 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-2.5 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-900/60 focus:outline-none text-slate-700 dark:text-slate-300"
+            className="px-2.5 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/80 focus:outline-none focus:border-brand-gold text-slate-700 dark:text-slate-200"
           >
             <option value="">All Statuses</option>
             <option value="Closed">Closed</option>
@@ -197,7 +197,7 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
           <select
             value={filterDirection}
             onChange={(e) => setFilterDirection(e.target.value)}
-            className="px-2.5 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-900/60 focus:outline-none text-slate-700 dark:text-slate-300"
+            className="px-2.5 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/80 focus:outline-none focus:border-brand-gold text-slate-700 dark:text-slate-200"
           >
             <option value="">All Directions</option>
             <option value="BUY">BUY Only</option>
@@ -207,7 +207,7 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
           <select
             value={filterSession}
             onChange={(e) => setFilterSession(e.target.value)}
-            className="px-2.5 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700/80 bg-slate-50 dark:bg-slate-900/60 focus:outline-none text-slate-700 dark:text-slate-300"
+            className="px-2.5 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/80 focus:outline-none focus:border-brand-gold text-slate-700 dark:text-slate-200"
           >
             <option value="">All Sessions</option>
             <option value="London">London</option>
@@ -234,11 +234,11 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
       </div>
 
       {/* Trades Table */}
-      <div className="rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white dark:bg-dark-card shadow-sm overflow-hidden">
+      <div className="rounded-2xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-md overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs sm:text-sm">
             <thead>
-              <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+              <tr className="border-b border-slate-200 dark:border-brand-tealBorder bg-slate-50/50 dark:bg-dark-bg/60 text-[11px] font-semibold text-brand-gold uppercase tracking-wider">
                 <th className="py-3 px-4">Date</th>
                 <th className="py-3 px-4">Symbol</th>
                 <th className="py-3 px-3">Type</th>
@@ -647,21 +647,21 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
       {/* QUICK CLOSE TRADE MODAL */}
       {closingTrade && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
-          <div className="w-full max-w-md p-6 rounded-2xl bg-white dark:bg-dark-card border border-slate-200 dark:border-slate-800 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+          <div className="w-full max-w-md p-6 rounded-2xl bg-white dark:bg-brand-tealSurface border border-slate-200 dark:border-brand-tealBorder shadow-2xl space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-brand-tealBorder">
               <div>
-                <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                <h3 className="text-base font-bold text-slate-900 dark:text-brand-goldLight flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-brand-gold" />
                   <span>Close Trade Manually</span>
                 </h3>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-slate-400 font-mono">
                   {closingTrade.symbol} • {closingTrade.direction} • {closingTrade.positionSize} Lots @ {closingTrade.entryPrice}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setClosingTrade(null)}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-brand-tealHover"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -680,13 +680,13 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
                   placeholder={closingTrade.takeProfit ? String(closingTrade.takeProfit) : String(closingTrade.entryPrice)}
                   value={closeExitPrice}
                   onChange={(e) => setCloseExitPrice(e.target.value)}
-                  className="w-full px-3 py-2.5 text-sm font-mono font-bold rounded-xl border border-indigo-500/40 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2.5 text-sm font-mono font-bold rounded-xl border border-brand-tealBorder bg-slate-50 dark:bg-dark-bg text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-gold"
                 />
               </div>
 
               {/* Live Preview */}
               {parseFloat(closeExitPrice) > 0 && (
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 text-xs font-mono space-y-1.5">
+                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-dark-bg/60 border border-slate-200 dark:border-brand-tealBorder text-xs font-mono space-y-1.5">
                   {(() => {
                     const xp = parseFloat(closeExitPrice) || 0;
                     const ep = closingTrade.entryPrice;
@@ -701,7 +701,7 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
                     return (
                       <div className="flex items-center justify-between">
                         <span className="text-slate-400 font-sans">Estimated Realized P/L:</span>
-                        <span className={`text-base font-bold ${isWin ? 'text-emerald-400' : 'text-red-400'}`}>
+                        <span className={`text-base font-bold ${isWin ? 'text-emerald-400' : 'text-rose-400'}`}>
                           {isWin ? '+' : ''}${Math.round(gross * 100) / 100}
                         </span>
                       </div>
@@ -714,14 +714,14 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
                 <button
                   type="button"
                   onClick={() => setClosingTrade(null)}
-                  className="px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold text-slate-400 hover:text-white"
+                  className="px-4 py-2 rounded-xl border border-slate-200 dark:border-brand-tealBorder text-xs font-semibold text-slate-400 hover:text-white"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={closeLoading || !parseFloat(closeExitPrice)}
-                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs shadow-md shadow-emerald-600/30 disabled:opacity-50 transition-all flex items-center gap-1.5"
+                  className="px-5 py-2 rounded-xl bg-brand-gold hover:bg-brand-goldLight text-brand-tealDark font-bold text-xs shadow-md shadow-brand-gold/30 disabled:opacity-50 transition-all flex items-center gap-1.5"
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   <span>{closeLoading ? 'Closing Trade...' : 'Confirm & Close Trade'}</span>

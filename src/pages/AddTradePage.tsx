@@ -281,21 +281,21 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* CARD 1: SETUP & DIRECTION */}
-        <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-card shadow-sm space-y-4">
-          <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+        <div className="p-5 rounded-2xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-md space-y-4">
+          <h2 className="text-xs font-bold text-brand-gold uppercase tracking-wider">
             1. Trade Setup
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Account */}
             <div>
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">
                 Trading Account *
               </label>
               <select
                 value={accountId}
                 onChange={(e) => setAccountId(e.target.value)}
-                className="w-full px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-white"
+                className="w-full px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/80 text-slate-900 dark:text-white focus:outline-none focus:border-brand-gold"
                 required
               >
                 {accounts.length === 0 ? (
@@ -313,17 +313,17 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
             {/* Symbol with 1-click presets */}
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                <label className="text-xs font-semibold text-slate-600 dark:text-slate-300">
                   Symbol *
                 </label>
                 <div className="flex gap-1.5 text-[10px]">
                   <button
                     type="button"
                     onClick={() => selectInstrument('XAUUSD', '2700.00', '2690.00', '2720.00', '0.10')}
-                    className={`px-2 py-0.5 rounded font-bold transition-all ${
+                    className={`px-2.5 py-0.5 rounded-lg font-bold transition-all ${
                       symbol === 'XAUUSD'
-                        ? 'bg-amber-500 text-slate-950 shadow-sm'
-                        : 'bg-amber-500/10 text-amber-400 hover:bg-amber-500/20'
+                        ? 'bg-brand-gold text-brand-tealDark shadow-sm shadow-brand-gold/25'
+                        : 'bg-brand-gold/15 text-brand-gold border border-brand-gold/30 hover:bg-brand-gold/25'
                     }`}
                   >
                     Gold
@@ -331,10 +331,10 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
                   <button
                     type="button"
                     onClick={() => selectInstrument('EURUSD', '1.08500', '1.08200', '1.09100', '0.50')}
-                    className={`px-2 py-0.5 rounded font-bold transition-all ${
+                    className={`px-2.5 py-0.5 rounded-lg font-bold transition-all ${
                       symbol === 'EURUSD'
-                        ? 'bg-indigo-600 text-white shadow-sm'
-                        : 'bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20'
+                        ? 'bg-brand-gold text-brand-tealDark shadow-sm shadow-brand-gold/25'
+                        : 'bg-brand-gold/15 text-brand-gold border border-brand-gold/30 hover:bg-brand-gold/25'
                     }`}
                   >
                     EURUSD
@@ -342,10 +342,10 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
                   <button
                     type="button"
                     onClick={() => selectInstrument('GBPUSD', '1.29500', '1.29100', '1.30300', '0.50')}
-                    className={`px-2 py-0.5 rounded font-bold transition-all ${
+                    className={`px-2.5 py-0.5 rounded-lg font-bold transition-all ${
                       symbol === 'GBPUSD'
-                        ? 'bg-blue-600 text-white shadow-sm'
-                        : 'bg-blue-500/10 text-blue-400 hover:bg-blue-500/20'
+                        ? 'bg-brand-gold text-brand-tealDark shadow-sm shadow-brand-gold/25'
+                        : 'bg-brand-gold/15 text-brand-gold border border-brand-gold/30 hover:bg-brand-gold/25'
                     }`}
                   >
                     GBPUSD
@@ -357,7 +357,7 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
                 value={symbol}
                 onChange={(e) => setSymbol(e.target.value.toUpperCase())}
                 placeholder="e.g. XAUUSD, EURUSD"
-                className="w-full px-3 py-2 text-xs font-mono font-bold uppercase rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-white"
+                className="w-full px-3 py-2 text-xs font-mono font-bold uppercase rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/80 text-slate-900 dark:text-white focus:outline-none focus:border-brand-gold"
                 required
               />
             </div>
@@ -366,7 +366,7 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-1">
             {/* Direction BUY / SELL */}
             <div className="col-span-2">
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">
                 Direction *
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -375,8 +375,8 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
                   onClick={() => setDirection('BUY')}
                   className={`py-2 text-xs font-bold rounded-xl transition-all ${
                     direction === 'BUY'
-                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/30'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-white'
+                      ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/25'
+                      : 'bg-slate-100 dark:bg-dark-bg/80 border border-slate-200 dark:border-brand-tealBorder text-slate-400 hover:text-emerald-400'
                   }`}
                 >
                   BUY / LONG
@@ -386,8 +386,8 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
                   onClick={() => setDirection('SELL')}
                   className={`py-2 text-xs font-bold rounded-xl transition-all ${
                     direction === 'SELL'
-                      ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-white'
+                      ? 'bg-rose-500 text-white shadow-md shadow-rose-500/25'
+                      : 'bg-slate-100 dark:bg-dark-bg/80 border border-slate-200 dark:border-brand-tealBorder text-slate-400 hover:text-rose-400'
                   }`}
                 >
                   SELL / SHORT
@@ -397,13 +397,13 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
 
             {/* Status (Open / Closed) */}
             <div>
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">
                 Trade Status
               </label>
               <select
                 value={status}
                 onChange={(e) => setStatus(e.target.value as TradeStatus)}
-                className="w-full px-3 py-2 text-xs font-bold rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-white"
+                className="w-full px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/80 text-slate-900 dark:text-white focus:outline-none focus:border-brand-gold"
               >
                 <option value="Open">Open (Active)</option>
                 <option value="Closed">Closed (Realized)</option>
@@ -530,8 +530,8 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
                   onClick={() => setLeverage(lev)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-mono font-bold transition-all ${
                     leverage === lev
-                      ? 'bg-indigo-600 text-white shadow-sm'
-                      : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                      ? 'bg-brand-gold text-brand-tealDark shadow-md shadow-brand-gold/25'
+                      : 'bg-slate-100 dark:bg-dark-bg/80 border border-slate-200 dark:border-brand-tealBorder text-slate-600 dark:text-slate-300 hover:border-brand-gold/40'
                   }`}
                 >
                   1:{lev}
@@ -542,20 +542,20 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
         </div>
 
         {/* CARD 3: STRATEGY & NOTES (OPTIONAL) */}
-        <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-dark-card shadow-sm space-y-4">
-          <h2 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+        <div className="p-5 rounded-2xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface shadow-md space-y-4">
+          <h2 className="text-xs font-bold text-brand-gold uppercase tracking-wider">
             3. Strategy & Notes (Optional)
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">
                 Strategy
               </label>
               <select
                 value={strategyId}
                 onChange={(e) => setStrategyId(e.target.value)}
-                className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-white"
+                className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/80 text-slate-900 dark:text-white focus:outline-none focus:border-brand-gold"
               >
                 <option value="">No Strategy Selected</option>
                 {strategies.map((s) => (
@@ -567,13 +567,13 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">
                 Session
               </label>
               <select
                 value={session}
                 onChange={(e) => setSession(e.target.value as TradingSession)}
-                className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-white"
+                className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/80 text-slate-900 dark:text-white focus:outline-none focus:border-brand-gold"
               >
                 <option value="London">London</option>
                 <option value="New York">New York</option>
@@ -583,13 +583,13 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">
                 Timeframe
               </label>
               <select
                 value={timeframe}
                 onChange={(e) => setTimeframe(e.target.value as Timeframe)}
-                className="w-full px-3 py-2 text-xs font-mono rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-white"
+                className="w-full px-3 py-2 text-xs font-mono rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/80 text-slate-900 dark:text-white focus:outline-none focus:border-brand-gold"
               >
                 <option value="M1">M1</option>
                 <option value="M5">M5</option>
@@ -603,7 +603,7 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
           </div>
 
           <div>
-            <label className="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">
+            <label className="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">
               Trade Notes & Reason
             </label>
             <textarea
@@ -611,48 +611,48 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               placeholder="Key notes, setup reason, or entry thoughts..."
-              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 text-slate-900 dark:text-white placeholder:text-slate-500"
+              className="w-full px-3 py-2 text-xs rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-slate-50 dark:bg-dark-bg/80 text-slate-900 dark:text-white placeholder:text-slate-500 focus:outline-none focus:border-brand-gold"
             />
           </div>
         </div>
 
         {/* LIVE CALCULATION METRICS BAR */}
         {parseFloat(entryPrice) > 0 && parseFloat(stopLoss) > 0 && (
-          <div className="p-4 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-500/20 space-y-2 font-mono">
+          <div className="p-4 rounded-2xl bg-brand-tealSurface border border-brand-tealBorder space-y-2 font-mono shadow-md">
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
               <div>
                 <span className="text-slate-400 block text-[10px] uppercase font-sans font-semibold">Risk Amount</span>
-                <span className="font-bold text-red-500 text-sm sm:text-base">
+                <span className="font-bold text-rose-400 text-sm sm:text-base">
                   -${liveCalc.riskAmount} ({liveCalc.riskPercent}%)
                 </span>
               </div>
 
               <div>
                 <span className="text-slate-400 block text-[10px] uppercase font-sans font-semibold">Planned Reward</span>
-                <span className="font-bold text-emerald-500 text-sm sm:text-base">
+                <span className="font-bold text-emerald-400 text-sm sm:text-base">
                   +${liveCalc.plannedReward}
                 </span>
               </div>
 
               <div>
                 <span className="text-slate-400 block text-[10px] uppercase font-sans font-semibold">Risk / Reward</span>
-                <span className="font-bold text-indigo-400 text-sm sm:text-base">
+                <span className="font-bold text-brand-gold text-sm sm:text-base">
                   {liveCalc.plannedRr}R
                 </span>
               </div>
 
               <div>
                 <span className="text-slate-400 block text-[10px] uppercase font-sans font-semibold">Required Margin</span>
-                <span className="font-bold text-amber-400 text-sm sm:text-base">
+                <span className="font-bold text-brand-goldLight text-sm sm:text-base">
                   ${liveCalc.marginRequired} <span className="text-[10px] text-slate-400 font-normal">@ 1:{leverage}</span>
                 </span>
               </div>
             </div>
 
             {status === 'Closed' && parseFloat(exitPrice) > 0 && (
-              <div className="pt-2 border-t border-indigo-500/10 flex items-center justify-between text-xs">
-                <span className="text-slate-400 font-sans">Net Realized Result:</span>
-                <span className={`text-base font-bold ${liveCalc.potentialPnl >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+              <div className="pt-2 border-t border-brand-tealBorder flex items-center justify-between text-xs">
+                <span className="text-slate-300 font-sans">Net Realized Result:</span>
+                <span className={`text-base font-bold ${liveCalc.potentialPnl >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
                   {liveCalc.potentialPnl >= 0 ? '+' : ''}${liveCalc.potentialPnl}
                 </span>
               </div>
@@ -665,7 +665,7 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
           <button
             type="button"
             onClick={onCancel}
-            className="px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="px-5 py-2.5 rounded-xl border border-slate-200 dark:border-brand-tealBorder text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-brand-tealHover transition-colors"
           >
             Cancel
           </button>
@@ -673,7 +673,7 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
           <button
             type="submit"
             disabled={loading}
-            className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-md shadow-indigo-600/30 transition-all disabled:opacity-50"
+            className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-brand-gold hover:bg-brand-goldLight text-brand-tealDark font-bold text-xs sm:text-sm shadow-lg shadow-brand-gold/25 transition-all disabled:opacity-50 active:scale-95"
           >
             <Save className="w-4 h-4 stroke-[2.5]" />
             <span>{loading ? 'Saving Trade...' : initialTrade ? 'Save Changes' : 'Record Trade'}</span>
