@@ -285,6 +285,13 @@ class ApiService {
     return this.request(`/coach/insights${accountId ? `?accountId=${accountId}` : ''}`);
   }
 
+  async chatWithCoach(message: string, history: Array<{ role: 'user' | 'assistant'; content: string }> = [], accountId?: string): Promise<{ reply: string }> {
+    return this.request('/coach/chat', {
+      method: 'POST',
+      body: JSON.stringify({ message, history, accountId }),
+    });
+  }
+
   // Reports
   async getReportSummary(accountId?: string): Promise<any> {
     return this.request(`/reports/summary${accountId ? `?accountId=${accountId}` : ''}`);
