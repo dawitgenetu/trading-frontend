@@ -6,9 +6,12 @@ import {
   TrendingUp,
   DollarSign,
   ShieldAlert,
+  Clock,
+  CheckCircle2,
 } from 'lucide-react';
 import { useAccount } from '../context/AccountContext';
 import { api } from '../services/api';
+import { PostTradeDisciplineModal } from '../components/common/PostTradeDisciplineModal';
 import type { Trade, Strategy, TradeDirection, TradeStatus, MarketType, TradingSession, Timeframe } from '../types';
 
 interface AddTradePageProps {
@@ -68,6 +71,24 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
     notionalValue: 0,
     potentialPnl: 0,
   });
+
+  // 2-Trades-Per-Day Tracking & Psychology Modal
+  const [dayTradesCount, setDayTradesCount] = useState<number>(0);
+  const [overrideDailyLimit, setOverrideDailyLimit] = useState<boolean>(false);
+  const [savedClosedTrade, setSavedClosedTrade] = useState<Trade | null>(null);
+  const [showDisciplineModal, setShowDisciplineModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    const targetAccId = accountId || selectedAccount?.id;
+    if (targetAccId && tradeDate) {
+      api.getTrades({ accountId: targetAccId, startDate: tradeDate, endDate: tradeDate })
+        .then((res) => {
+          const count = (res.trades || []).filter((t) => t.id !== initialTrade?.id).length;
+          setDayTradesCount(count);
+        })
+        .catch(console.error);
+    }
+  }, [accountId, selectedAccount?.id, tradeDate, initialTrade?.id]);
 
   // Auto-sync account when accounts are available
   useEffect(() => {
@@ -199,10 +220,16 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
       }
     }
 
+    // 2-Trades-Per-Day Limit Check
+    if (!initialTrade && dayTradesCount >= 2 && !overrideDailyLimit) {
+      setErrorMsg('Daily Trade Limit Reached (2/2 trades). For strict risk discipline, max 2 trades per day is enforced for this project. Check the override box below if this is an exceptional setup.');
+      return;
+    }
+
     try {
       setLoading(true);
 
-      const tradePayload: Partial<Trade> = {
+      const tradePayload: any = {
         accountId: activeAccId,
         symbol: symbol.toUpperCase().trim(),
         marketType,
@@ -225,15 +252,25 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
         entryReason: notes,
         leverage: leverage || 100,
         marginRequired: liveCalc.marginRequired,
+        bypassDailyLimit: overrideDailyLimit,
       };
 
+      let saved: Trade;
       if (initialTrade?.id) {
-        await api.updateTrade(initialTrade.id, tradePayload);
+        const res = await api.updateTrade(initialTrade.id, tradePayload);
+        saved = res.trade;
       } else {
-        await api.createTrade(tradePayload);
+        const res = await api.createTrade(tradePayload);
+        saved = res.trade;
       }
 
-      onSuccess();
+      // If trade was saved as Closed, display emotional discipline calm-down tips modal!
+      if (saved && saved.status === 'Closed') {
+        setSavedClosedTrade(saved);
+        setShowDisciplineModal(true);
+      } else {
+        onSuccess();
+      }
     } catch (err: any) {
       setErrorMsg(err.message || 'Failed to save trade. Please check your inputs.');
     } finally {
@@ -278,6 +315,50 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
           <span>⚠️ No trading account found. Please create an account in the Accounts tab before recording trades.</span>
         </div>
       )}
+
+      {/* 2-Trades-Per-Day Discipline Rule Banner */}
+      <div className={`p-4 rounded-2xl border transition-all ${
+        dayTradesCount >= 2
+          ? 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+          : dayTradesCount === 1
+          ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+          : 'bg-brand-tealSurface border-brand-tealBorder text-slate-300'
+      }`}>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div className="flex items-center gap-2.5">
+            <Clock className="w-4 h-4 text-brand-gold flex-shrink-0" />
+            <span className="text-xs font-semibold">
+              Daily Rule: <b>Max 2 Trades Per Day</b> ({dayTradesCount}/2 logged for {tradeDate})
+            </span>
+          </div>
+          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold self-start sm:self-auto ${
+            dayTradesCount >= 2
+              ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40'
+              : dayTradesCount === 1
+              ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
+              : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+          }`}>
+            {dayTradesCount >= 2 ? '⛔ Daily Limit Reached' : `${2 - dayTradesCount} Trade${2 - dayTradesCount === 1 ? '' : 's'} Remaining`}
+          </span>
+        </div>
+
+        {dayTradesCount >= 2 && !initialTrade && (
+          <div className="mt-3 pt-3 border-t border-rose-500/20 text-xs text-rose-300 space-y-2">
+            <p>
+              🛑 Overtrading is the leading cause of drawdown. You have already logged 2 trades for this day. For strict discipline, close your charts and reflect on your journal.
+            </p>
+            <label className="flex items-center gap-2 cursor-pointer font-medium text-white hover:text-brand-goldLight transition-colors">
+              <input
+                type="checkbox"
+                checked={overrideDailyLimit}
+                onChange={(e) => setOverrideDailyLimit(e.target.checked)}
+                className="w-4 h-4 rounded text-brand-gold focus:ring-0 bg-dark-bg border-brand-tealBorder"
+              />
+              <span>I acknowledge I am violating my 2-trades-per-day rule (Emergency Override)</span>
+            </label>
+          </div>
+        )}
+      </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* CARD 1: SETUP & DIRECTION */}
@@ -680,6 +761,19 @@ export const AddTradePage: React.FC<AddTradePageProps> = ({ initialTrade, onSucc
           </button>
         </div>
       </form>
+
+      {/* Post-Trade Emotional Discipline Calm-Down & Victory Advisory Modal */}
+      {savedClosedTrade && (
+        <PostTradeDisciplineModal
+          trade={savedClosedTrade}
+          isOpen={showDisciplineModal}
+          onClose={() => {
+            setShowDisciplineModal(false);
+            onSuccess();
+          }}
+          todayTradesCount={dayTradesCount + 1}
+        />
+      )}
     </div>
   );
 };

@@ -37,7 +37,7 @@ export const RiskCenterPage: React.FC = () => {
     maxDailyLoss: 500,
     maxWeeklyLoss: 1500,
     maxAccountDrawdownPct: 5,
-    maxTradesPerDay: 5,
+    maxTradesPerDay: 2,
     maxConsecutiveLosses: 3,
     defaultRiskPercentage: 1.0,
   });

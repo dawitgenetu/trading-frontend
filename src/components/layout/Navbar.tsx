@@ -9,10 +9,12 @@ import {
   User,
   LogOut,
   Wallet,
+  Send,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useAccount } from '../../context/AccountContext';
 import { api } from '../../services/api';
+import { TelegramSettingsModal } from '../common/TelegramSettingsModal';
 
 interface NavbarProps {
   onToggleSidebar: () => void;
@@ -25,6 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenAddTrade 
 
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [telegramModalOpen, setTelegramModalOpen] = useState(false);
   const [riskBreaches, setRiskBreaches] = useState<any[]>([]);
 
   // Fetch risk alert status
@@ -144,6 +147,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenAddTrade 
           <span className="hidden sm:inline">Add Trade</span>
         </button>
 
+        {/* Telegram Notifications Button */}
+        <button
+          onClick={() => setTelegramModalOpen(true)}
+          title="Configure Telegram Bot Alerts & Daily Limit Notifications"
+          className="p-2 text-sky-400 hover:text-sky-300 rounded-xl hover:bg-sky-500/10 border border-sky-500/20 transition-all flex items-center gap-1.5"
+        >
+          <Send className="w-4 h-4" />
+          <span className="hidden xl:inline text-xs font-semibold text-sky-400">Telegram Bot</span>
+        </button>
+
         {/* Risk Alerts Indicator */}
         {riskBreaches.length > 0 && (
           <div className="relative group">
@@ -197,6 +210,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenAddTrade 
               </div>
               <button
                 onClick={() => {
+                  setProfileMenuOpen(false);
+                  setTelegramModalOpen(true);
+                }}
+                className="flex items-center gap-2 w-full px-3 py-2 text-xs text-sky-400 hover:bg-sky-500/10 rounded-lg transition-colors font-medium"
+              >
+                <Send className="w-3.5 h-3.5" />
+                <span>Telegram Bot Alerts</span>
+              </button>
+              <button
+                onClick={() => {
                   logout();
                   setProfileMenuOpen(false);
                 }}
@@ -209,6 +232,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenAddTrade 
           )}
         </div>
       </div>
+      {/* Telegram Bot Settings Modal */}
+      <TelegramSettingsModal
+        isOpen={telegramModalOpen}
+        onClose={() => setTelegramModalOpen(false)}
+      />
     </header>
   );
 };

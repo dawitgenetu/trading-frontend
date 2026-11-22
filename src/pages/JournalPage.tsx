@@ -16,9 +16,14 @@ import {
   AlertCircle,
   Clock,
   Layers,
+  Send,
+  Heart,
+  ShieldCheck,
 } from 'lucide-react';
 import { useAccount } from '../context/AccountContext';
 import { api } from '../services/api';
+import { PostTradeDisciplineModal } from '../components/common/PostTradeDisciplineModal';
+import { TelegramSettingsModal } from '../components/common/TelegramSettingsModal';
 import type { Trade, TradeStatus, TradeDirection } from '../types';
 
 interface JournalPageProps {
@@ -53,6 +58,11 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
   const [closingTrade, setClosingTrade] = useState<Trade | null>(null);
   const [closeExitPrice, setCloseExitPrice] = useState<string>('');
   const [closeLoading, setCloseLoading] = useState(false);
+
+  // Post-Trade Discipline Tips & Telegram Modals
+  const [closedDisciplineTrade, setClosedDisciplineTrade] = useState<Trade | null>(null);
+  const [showDisciplineModal, setShowDisciplineModal] = useState<boolean>(false);
+  const [telegramModalOpen, setTelegramModalOpen] = useState<boolean>(false);
 
   const fetchTrades = async () => {
     try {
@@ -94,7 +104,7 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
 
     try {
       setCloseLoading(true);
-      await api.updateTrade(closingTrade.id, {
+      const res = await api.updateTrade(closingTrade.id, {
         status: 'Closed',
         exitPrice: xp,
         exitTime: new Date().toISOString(),
@@ -104,6 +114,12 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
       if (activeTrade?.id === closingTrade.id) setActiveTrade(null);
       await fetchTrades();
       await refreshAccounts();
+
+      // Trigger post-trade emotional discipline & calm-down advisory modal!
+      if (res.trade) {
+        setClosedDisciplineTrade(res.trade);
+        setShowDisciplineModal(true);
+      }
     } catch (err: any) {
       alert(err.message || 'Failed to close trade');
     } finally {
@@ -148,7 +164,22 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Daily 2-Trade Discipline Indicator */}
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-brand-tealBorder bg-brand-tealSurface text-xs text-slate-300 font-semibold shadow-sm">
+            <Clock className="w-3.5 h-3.5 text-brand-gold" />
+            <span>Rule: <b className="text-brand-gold">Max 2 Trades/Day</b></span>
+          </div>
+
+          {/* Telegram Notifications Button */}
+          <button
+            onClick={() => setTelegramModalOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#229ED9]/40 bg-[#229ED9]/10 text-[#229ED9] text-xs font-semibold hover:bg-[#229ED9]/20 transition-colors shadow-sm"
+          >
+            <Send className="w-3.5 h-3.5" />
+            <span>Telegram Bot</span>
+          </button>
+
           <button
             onClick={handleExportCsv}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-brand-tealBorder bg-white dark:bg-brand-tealSurface text-xs font-semibold hover:border-brand-gold/40 text-brand-gold transition-colors"
@@ -594,6 +625,19 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
                   {activeTrade.lessonsLearned}
                 </div>
               )}
+              {activeTrade.status === 'Closed' && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setClosedDisciplineTrade(activeTrade);
+                    setShowDisciplineModal(true);
+                  }}
+                  className="w-full mt-2 py-2 px-3 rounded-xl border border-brand-gold/40 text-brand-gold bg-brand-gold/10 hover:bg-brand-gold/20 text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
+                >
+                  <Heart className="w-3.5 h-3.5" />
+                  <span>View Post-Trade Discipline & Calm-Down Tips</span>
+                </button>
+              )}
             </div>
 
             {/* Screenshots */}
@@ -731,6 +775,22 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
           </div>
         </div>
       )}
+
+      {/* Post-Trade Emotional Discipline Calm-Down & Victory Advisory Modal */}
+      {closedDisciplineTrade && (
+        <PostTradeDisciplineModal
+          trade={closedDisciplineTrade}
+          isOpen={showDisciplineModal}
+          onClose={() => setShowDisciplineModal(false)}
+          todayTradesCount={trades.filter((t) => t.tradeDate === closedDisciplineTrade.tradeDate).length}
+        />
+      )}
+
+      {/* Telegram Bot Settings Modal */}
+      <TelegramSettingsModal
+        isOpen={telegramModalOpen}
+        onClose={() => setTelegramModalOpen(false)}
+      />
     </div>
   );
 };

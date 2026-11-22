@@ -296,6 +296,25 @@ class ApiService {
   async getReportSummary(accountId?: string): Promise<any> {
     return this.request(`/reports/summary${accountId ? `?accountId=${accountId}` : ''}`);
   }
+
+  // Telegram Notifications
+  async getTelegramSettings(): Promise<{ success: boolean; settings: any; isConfigured: boolean; hasEnvFallback: boolean }> {
+    return this.request('/telegram/settings');
+  }
+
+  async saveTelegramSettings(settings: any): Promise<{ success: boolean; settings: any; isConfigured: boolean }> {
+    return this.request('/telegram/settings', {
+      method: 'PUT',
+      body: JSON.stringify(settings),
+    });
+  }
+
+  async testTelegram(botToken?: string, chatId?: string): Promise<{ success: boolean; message: string }> {
+    return this.request('/telegram/test', {
+      method: 'POST',
+      body: JSON.stringify({ botToken, chatId }),
+    });
+  }
 }
 
 export const api = new ApiService();
