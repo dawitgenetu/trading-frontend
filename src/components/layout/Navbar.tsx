@@ -141,16 +141,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenAddTrade 
           <span className="hidden sm:inline">Add Trade</span>
         </button>
 
-        {/* Exness Connection Button */}
-        <button
-          onClick={() => setExnessModalOpen(true)}
-          title="Connect & Synchronize Exness Account"
-          className="p-2 text-brand-gold hover:text-brand-goldLight rounded-xl hover:bg-brand-gold/10 border border-brand-gold/30 transition-all flex items-center gap-1.5 flex-shrink-0"
-        >
-          <Link2 className="w-4 h-4" />
-          <span className="hidden xl:inline text-xs font-semibold text-brand-gold">Exness API</span>
-        </button>
-
         {/* Telegram Notifications Button */}
         <button
           onClick={() => setTelegramModalOpen(true)}
