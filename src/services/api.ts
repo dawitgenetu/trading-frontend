@@ -358,6 +358,12 @@ class ApiService {
     autoTradingEnabled?: boolean;
     defaultLotSize?: number;
     maxSlippagePips?: number;
+    balance?: number;
+    equity?: number;
+    freeMargin?: number;
+    usedMargin?: number;
+    leverage?: number;
+    currency?: string;
   }): Promise<{ success: boolean; message: string; accountInfo?: ExnessAccountInfo; syncResult?: any }> {
     return this.request('/exness/connect', {
       method: 'POST',
@@ -371,6 +377,10 @@ class ApiService {
     apiKey?: string;
     apiSecret?: string;
     apiEndpoint?: string;
+    balance?: number;
+    equity?: number;
+    leverage?: number;
+    currency?: string;
   }): Promise<{ success: boolean; message: string; pingMs?: number; accountInfo?: ExnessAccountInfo }> {
     return this.request('/exness/test', {
       method: 'POST',

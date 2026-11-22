@@ -202,6 +202,13 @@ export interface ExnessCredentials {
   autoTradingEnabled: boolean;
   maxSlippagePips?: number;
   defaultLotSize?: number;
+  balance?: number;
+  equity?: number;
+  freeMargin?: number;
+  usedMargin?: number;
+  marginLevel?: number;
+  leverage?: number;
+  currency?: string;
   isConnected: boolean;
   lastConnectedAt?: string;
   lastSyncAt?: string;

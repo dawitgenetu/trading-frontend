@@ -54,6 +54,10 @@ export const ExnessConnectionModal: React.FC<ExnessConnectionModalProps> = ({
   const [apiKey, setApiKey] = useState('');
   const [apiSecret, setApiSecret] = useState('');
   const [tradingPassword, setTradingPassword] = useState('');
+  const [balance, setBalance] = useState('');
+  const [equity, setEquity] = useState('');
+  const [currency, setCurrency] = useState('USD');
+  const [leverage, setLeverage] = useState('500');
   const [apiEndpoint, setApiEndpoint] = useState('https://www.exness-api.com');
   const [autoTradingEnabled, setAutoTradingEnabled] = useState(false);
   const [defaultLotSize, setDefaultLotSize] = useState('0.01');
@@ -93,6 +97,10 @@ export const ExnessConnectionModal: React.FC<ExnessConnectionModalProps> = ({
         setAutoTradingEnabled(Boolean(res.connection.autoTradingEnabled));
         setDefaultLotSize(String(res.connection.defaultLotSize || '0.01'));
         setMaxSlippagePips(String(res.connection.maxSlippagePips || '3'));
+        if (res.connection.balance !== undefined && res.connection.balance !== null) setBalance(String(res.connection.balance));
+        if (res.connection.equity !== undefined && res.connection.equity !== null) setEquity(String(res.connection.equity));
+        if (res.connection.currency) setCurrency(res.connection.currency);
+        if (res.connection.leverage) setLeverage(String(res.connection.leverage));
       }
     } catch (err: any) {
       console.warn('Could not load Exness connection:', err);
@@ -119,13 +127,21 @@ export const ExnessConnectionModal: React.FC<ExnessConnectionModalProps> = ({
         apiKey: apiKey.trim() || undefined,
         apiSecret: apiSecret.trim() || undefined,
         apiEndpoint: apiEndpoint.trim() || undefined,
+        balance: balance ? parseFloat(balance) : undefined,
+        equity: equity ? parseFloat(equity) : undefined,
+        leverage: parseInt(leverage) || 500,
+        currency,
       });
 
       if (res.success) {
         setTestResult({ pingMs: res.pingMs, account: res.accountInfo });
+        if (res.accountInfo?.balance !== undefined && !balance) {
+          setBalance(String(res.accountInfo.balance));
+          setEquity(String(res.accountInfo.equity));
+        }
         setStatusMsg({
           type: 'success',
-          text: `Verified! Exness server responded (${res.pingMs}ms). Balance: $${res.accountInfo?.balance.toFixed(2)} USD.`,
+          text: `Verified! Exness server responded (${res.pingMs}ms). Balance: $${res.accountInfo?.balance.toFixed(2)} ${res.accountInfo?.currency || 'USD'}.`,
         });
       }
     } catch (err: any) {
@@ -156,6 +172,10 @@ export const ExnessConnectionModal: React.FC<ExnessConnectionModalProps> = ({
         autoTradingEnabled,
         defaultLotSize: parseFloat(defaultLotSize) || 0.01,
         maxSlippagePips: parseFloat(maxSlippagePips) || 3,
+        balance: balance ? parseFloat(balance) : undefined,
+        equity: equity ? parseFloat(equity) : undefined,
+        leverage: parseInt(leverage) || 500,
+        currency,
       });
 
       setIsConnected(true);
@@ -400,6 +420,90 @@ export const ExnessConnectionModal: React.FC<ExnessConnectionModalProps> = ({
                 placeholder={existingConn?.hasTradingPassword ? '******** (Encrypted on Server)' : 'Required only for live trade execution'}
                 className="w-full px-3.5 py-2.5 text-xs font-mono rounded-xl border border-brand-tealBorder bg-dark-bg/90 text-white placeholder-slate-600 focus:outline-none focus:border-brand-gold"
               />
+            </div>
+
+            {/* Actual Exness Account Metrics */}
+            <div className="p-4 rounded-2xl bg-dark-bg/70 border border-brand-tealBorder/80 space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="text-xs font-bold text-white flex items-center gap-1.5">
+                  <DollarSign className="w-4 h-4 text-brand-gold" />
+                  <span>Actual Exness Account Metrics</span>
+                </div>
+                <span className="text-[10px] text-brand-gold bg-brand-gold/10 px-2 py-0.5 rounded-full border border-brand-gold/30">
+                  Exact MT4/MT5 Sync
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400">
+                Enter your live Exness account balance, equity, and leverage so the dashboard and journal reflect your real broker figures immediately.
+              </p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                    Balance ({currency})
+                  </label>
+                  <input
+                    type="number"
+                    step="any"
+                    value={balance}
+                    onChange={(e) => setBalance(e.target.value)}
+                    placeholder="e.g. 500.00"
+                    className="w-full px-3 py-2 text-xs font-mono rounded-xl border border-brand-tealBorder bg-dark-bg text-white placeholder-slate-600 focus:outline-none focus:border-brand-gold"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                    Live Equity ({currency})
+                  </label>
+                  <input
+                    type="number"
+                    step="any"
+                    value={equity}
+                    onChange={(e) => setEquity(e.target.value)}
+                    placeholder="e.g. 500.00"
+                    className="w-full px-3 py-2 text-xs font-mono rounded-xl border border-brand-tealBorder bg-dark-bg text-white placeholder-slate-600 focus:outline-none focus:border-brand-gold"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                    Currency
+                  </label>
+                  <select
+                    value={currency}
+                    onChange={(e) => setCurrency(e.target.value)}
+                    className="w-full px-3 py-2 text-xs font-mono rounded-xl border border-brand-tealBorder bg-dark-bg text-white focus:outline-none focus:border-brand-gold"
+                  >
+                    <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="GBP">GBP (£)</option>
+                    <option value="AUD">AUD (A$)</option>
+                    <option value="CAD">CAD (C$)</option>
+                    <option value="JPY">JPY (¥)</option>
+                    <option value="USDT">USDT (₮)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                    Leverage (1:X)
+                  </label>
+                  <select
+                    value={leverage}
+                    onChange={(e) => setLeverage(e.target.value)}
+                    className="w-full px-3 py-2 text-xs font-mono rounded-xl border border-brand-tealBorder bg-dark-bg text-white focus:outline-none focus:border-brand-gold"
+                  >
+                    <option value="100">1:100</option>
+                    <option value="200">1:200</option>
+                    <option value="400">1:400</option>
+                    <option value="500">1:500</option>
+                    <option value="1000">1:1000</option>
+                    <option value="2000">1:2000</option>
+                    <option value="9999">Unlimited (1:∞)</option>
+                  </select>
+                </div>
+              </div>
             </div>
 
             {/* Safety Switch: Automated Trade Execution */}

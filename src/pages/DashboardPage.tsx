@@ -218,6 +218,16 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
               }`}>
                 Auto-Trade: {exnessConn.autoTradingEnabled ? 'Authorized 🟢' : 'Disabled ⚪'}
               </span>
+              {exnessConn.balance !== undefined && exnessConn.balance !== null && (
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-dark-bg text-brand-gold border border-brand-tealBorder">
+                  Bal: {Number(exnessConn.balance).toLocaleString('en-US', { style: 'currency', currency: exnessConn.currency || 'USD' })}
+                </span>
+              )}
+              {exnessConn.equity !== undefined && exnessConn.equity !== null && (
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-dark-bg text-emerald-400 border border-brand-tealBorder">
+                  Eq: {Number(exnessConn.equity).toLocaleString('en-US', { style: 'currency', currency: exnessConn.currency || 'USD' })}
+                </span>
+              )}
               <span className="text-[11px] text-slate-400">
                 Sync: <b className="text-slate-300">{exnessConn.lastSyncAt ? new Date(exnessConn.lastSyncAt).toLocaleTimeString() : 'Never'}</b>
               </span>
