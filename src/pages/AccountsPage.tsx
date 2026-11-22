@@ -9,15 +9,21 @@ import {
   DollarSign,
   ArrowRight,
   TrendingUp,
+  Link2,
+  RefreshCw,
+  Zap,
+  ShieldCheck,
 } from 'lucide-react';
 import { useAccount } from '../context/AccountContext';
 import { api } from '../services/api';
 import type { TradingAccount, AccountType } from '../types';
+import { ExnessConnectionModal } from '../components/exness/ExnessConnectionModal';
 
 export const AccountsPage: React.FC = () => {
   const { accounts, selectedAccount, selectAccount, refreshAccounts, formatCurrency } = useAccount();
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [exnessModalOpen, setExnessModalOpen] = useState(false);
   const [editingAccount, setEditingAccount] = useState<TradingAccount | null>(null);
 
   // Form State
@@ -108,13 +114,23 @@ export const AccountsPage: React.FC = () => {
           </p>
         </div>
 
-        <button
-          onClick={openCreateModal}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-gold hover:bg-brand-goldLight text-brand-tealDark font-bold text-xs sm:text-sm shadow-md shadow-brand-gold/25 transition-all self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4 stroke-[2.5]" />
-          <span>New Account</span>
-        </button>
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          <button
+            onClick={() => setExnessModalOpen(true)}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-gradient-to-r from-brand-gold to-amber-500 hover:from-brand-goldLight hover:to-amber-400 text-brand-tealDark font-bold text-xs sm:text-sm shadow-md shadow-brand-gold/25 transition-all"
+          >
+            <Link2 className="w-4 h-4 stroke-[2.5]" />
+            <span>Connect Exness API</span>
+          </button>
+
+          <button
+            onClick={openCreateModal}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-brand-tealBorder bg-brand-tealSurface hover:bg-brand-tealHover text-slate-200 font-bold text-xs sm:text-sm transition-all"
+          >
+            <Plus className="w-4 h-4 stroke-[2.5]" />
+            <span>New Manual Account</span>
+          </button>
+        </div>
       </div>
 
       {/* Accounts Grid */}
@@ -178,21 +194,66 @@ export const AccountsPage: React.FC = () => {
                   </p>
                 )}
 
-                {/* Balances */}
-                <div className="grid grid-cols-2 gap-3 my-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-950/40 border border-slate-100 dark:border-slate-800/80 font-mono">
-                  <div>
-                    <span className="text-[10px] text-slate-400 block uppercase">Current Balance</span>
-                    <span className="text-base font-bold text-slate-900 dark:text-white">
-                      {formatCurrency(acc.currentBalance, acc.currency)}
-                    </span>
+                {/* Exness Live Metrics vs Manual Balances */}
+                {acc.isExnessConnected ? (
+                  <div className="my-4 p-3.5 rounded-xl bg-dark-bg/80 border border-brand-gold/30 font-mono space-y-2.5">
+                    <div className="flex items-center justify-between text-[11px] pb-2 border-b border-brand-tealBorder">
+                      <span className="text-brand-gold font-bold flex items-center gap-1">
+                        <Link2 className="w-3.5 h-3.5" /> Exness Live API
+                      </span>
+                      <span className="text-slate-400">
+                        Lev: <b className="text-white">1:{acc.leverage || 500}</b>
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <span className="text-[10px] text-slate-400 block">Balance</span>
+                        <span className="text-sm font-bold text-white">
+                          {formatCurrency(acc.currentBalance, acc.currency)}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-slate-400 block">Live Equity</span>
+                        <span className="text-sm font-bold text-emerald-400">
+                          {formatCurrency(acc.equity ?? acc.currentBalance, acc.currency)}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-slate-400 block">Free Margin</span>
+                        <span className="text-xs font-semibold text-slate-300">
+                          {formatCurrency(acc.freeMargin ?? acc.currentBalance, acc.currency)}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-slate-400 block">Used Margin</span>
+                        <span className="text-xs font-semibold text-slate-300">
+                          {formatCurrency(acc.usedMargin ?? 0, acc.currency)}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between text-[11px] pt-1.5 border-t border-brand-tealBorder/60 text-slate-400">
+                      <span>Margin Level: <b className="text-brand-gold">{(acc.marginLevel || 100).toFixed(1)}%</b></span>
+                      <span>Currency: <b className="text-white">{acc.currency || 'USD'}</b></span>
+                    </div>
                   </div>
-                  <div>
-                    <span className="text-[10px] text-slate-400 block uppercase">Initial Capital</span>
-                    <span className="text-base font-bold text-slate-400">
-                      {formatCurrency(acc.initialBalance, acc.currency)}
-                    </span>
+                ) : (
+                  <div className="grid grid-cols-2 gap-3 my-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-950/40 border border-slate-100 dark:border-slate-800/80 font-mono">
+                    <div>
+                      <span className="text-[10px] text-slate-400 block uppercase">Current Balance</span>
+                      <span className="text-base font-bold text-slate-900 dark:text-white">
+                        {formatCurrency(acc.currentBalance, acc.currency)}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-400 block uppercase">Initial Capital</span>
+                      <span className="text-base font-bold text-slate-400">
+                        {formatCurrency(acc.initialBalance, acc.currency)}
+                      </span>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 {acc.description && (
                   <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4">
@@ -342,6 +403,12 @@ export const AccountsPage: React.FC = () => {
           </div>
         </div>
       )}
+      {/* Exness Connection Modal */}
+      <ExnessConnectionModal
+        isOpen={exnessModalOpen}
+        onClose={() => setExnessModalOpen(false)}
+        onSuccess={() => refreshAccounts()}
+      />
     </div>
   );
 };

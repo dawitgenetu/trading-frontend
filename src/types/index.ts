@@ -30,6 +30,14 @@ export interface TradingAccount {
   isActive: boolean;
   createdAt?: string;
   equity?: number;
+  freeMargin?: number;
+  usedMargin?: number;
+  marginLevel?: number;
+  leverage?: number;
+  isExnessConnected?: boolean;
+  exnessAccountNumber?: string;
+  exnessServer?: string;
+  lastSyncAt?: string;
   netProfit?: number;
   winRate?: number;
   totalTrades?: number;
@@ -118,6 +126,9 @@ export interface Trade {
   didOvertrade: boolean;
   lessonsLearned?: string;
   screenshots?: TradeScreenshot[];
+  externalId?: string;
+  source?: 'MANUAL' | 'EXNESS';
+  exnessTicket?: string;
   createdAt?: string;
 }
 
@@ -175,4 +186,75 @@ export interface TradingGoal {
   notes?: string;
   progressPercentage?: number;
   isAchieved?: boolean;
+}
+
+export interface ExnessCredentials {
+  id?: string;
+  userId: string;
+  accountId?: string;
+  accountNumber: string;
+  server: string;
+  apiKey?: string;
+  apiSecret?: string;
+  apiEndpoint?: string;
+  tradingPassword?: string;
+  investorPassword?: string;
+  autoTradingEnabled: boolean;
+  maxSlippagePips?: number;
+  defaultLotSize?: number;
+  isConnected: boolean;
+  lastConnectedAt?: string;
+  lastSyncAt?: string;
+  syncStatus?: 'IDLE' | 'SYNCING' | 'SUCCESS' | 'ERROR';
+  syncError?: string | null;
+}
+
+export interface ExnessAccountInfo {
+  accountNumber: string;
+  balance: number;
+  equity: number;
+  freeMargin: number;
+  usedMargin: number;
+  marginLevel: number;
+  currency: string;
+  leverage: number;
+  credit?: number;
+  isDemo: boolean;
+  server: string;
+  pingMs?: number;
+}
+
+export interface ExnessPosition {
+  id: string;
+  symbol: string;
+  direction: TradeDirection;
+  volume: number;
+  openPrice: number;
+  currentPrice: number;
+  stopLoss?: number | null;
+  takeProfit?: number | null;
+  profit: number;
+  swap: number;
+  commission: number;
+  openTime: string;
+  comment?: string;
+}
+
+export interface ExnessOrderRequest {
+  accountId?: string;
+  symbol: string;
+  direction: TradeDirection;
+  volume: number;
+  orderType?: 'MARKET' | 'LIMIT' | 'STOP';
+  price?: number;
+  stopLoss?: number | null;
+  takeProfit?: number | null;
+  comment?: string;
+  deviation?: number;
+}
+
+export interface ExnessModifyPositionRequest {
+  positionId: string;
+  stopLoss?: number | null;
+  takeProfit?: number | null;
 }

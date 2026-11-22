@@ -6,6 +6,11 @@ import type {
   RiskSettings,
   TradingGoal,
   PerformanceStats,
+  ExnessCredentials,
+  ExnessAccountInfo,
+  ExnessPosition,
+  ExnessOrderRequest,
+  ExnessModifyPositionRequest,
 } from '../types';
 
 const API_BASE = (import.meta as any).env?.VITE_API_BASE || '/api';
@@ -329,6 +334,110 @@ class ApiService {
     return this.request('/telegram/test', {
       method: 'POST',
       body: JSON.stringify({ botToken, chatId }),
+    });
+  }
+
+  // --- Exness API Integration ---
+  async getExnessConnection(): Promise<{ success: boolean; isConnected: boolean; connection: any }> {
+    try {
+      return await this.request('/exness/connection');
+    } catch (err: any) {
+      console.warn('Failed to get Exness connection:', err);
+      return { success: false, isConnected: false, connection: null };
+    }
+  }
+
+  async connectExness(data: {
+    accountNumber: string;
+    server: string;
+    apiKey?: string;
+    apiSecret?: string;
+    tradingPassword?: string;
+    investorPassword?: string;
+    apiEndpoint?: string;
+    autoTradingEnabled?: boolean;
+    defaultLotSize?: number;
+    maxSlippagePips?: number;
+  }): Promise<{ success: boolean; message: string; accountInfo?: ExnessAccountInfo; syncResult?: any }> {
+    return this.request('/exness/connect', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async testExnessConnection(data: {
+    accountNumber: string;
+    server: string;
+    apiKey?: string;
+    apiSecret?: string;
+    apiEndpoint?: string;
+  }): Promise<{ success: boolean; message: string; pingMs?: number; accountInfo?: ExnessAccountInfo }> {
+    return this.request('/exness/test', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async disconnectExness(): Promise<{ success: boolean; message: string }> {
+    return this.request('/exness/disconnect', {
+      method: 'POST',
+    });
+  }
+
+  async getExnessAccount(): Promise<{ success: boolean; account: ExnessAccountInfo }> {
+    return this.request('/exness/account');
+  }
+
+  async getExnessPositions(): Promise<{ success: boolean; positions: ExnessPosition[] }> {
+    try {
+      return await this.request('/exness/positions');
+    } catch {
+      return { success: false, positions: [] };
+    }
+  }
+
+  async syncExness(): Promise<{
+    success: boolean;
+    syncedTradesCount: number;
+    openPositionsCount: number;
+    account: TradingAccount;
+    positions: ExnessPosition[];
+    message: string;
+  }> {
+    return this.request('/exness/sync', {
+      method: 'POST',
+    });
+  }
+
+  async executeExnessOrder(order: ExnessOrderRequest): Promise<{ success: boolean; ticket?: string; message: string }> {
+    return this.request('/exness/orders', {
+      method: 'POST',
+      body: JSON.stringify(order),
+    });
+  }
+
+  async modifyExnessPosition(positionId: string, stopLoss?: number | null, takeProfit?: number | null): Promise<{ success: boolean; message: string }> {
+    return this.request(`/exness/positions/${positionId}`, {
+      method: 'PUT',
+      body: JSON.stringify({ stopLoss, takeProfit }),
+    });
+  }
+
+  async closeExnessPosition(positionId: string, volume?: number): Promise<{ success: boolean; message: string }> {
+    return this.request(`/exness/positions/${positionId}/close`, {
+      method: 'POST',
+      body: JSON.stringify({ volume }),
+    });
+  }
+
+  async updateExnessSettings(settings: {
+    autoTradingEnabled?: boolean;
+    defaultLotSize?: number;
+    maxSlippagePips?: number;
+  }): Promise<{ success: boolean; message: string; settings: any }> {
+    return this.request('/exness/settings', {
+      method: 'PUT',
+      body: JSON.stringify(settings),
     });
   }
 }

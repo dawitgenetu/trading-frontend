@@ -10,11 +10,13 @@ import {
   LogOut,
   Wallet,
   Send,
+  Link2,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useAccount } from '../../context/AccountContext';
 import { api } from '../../services/api';
 import { TelegramSettingsModal } from '../common/TelegramSettingsModal';
+import { ExnessConnectionModal } from '../exness/ExnessConnectionModal';
 
 interface NavbarProps {
   onToggleSidebar: () => void;
@@ -28,6 +30,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenAddTrade 
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [telegramModalOpen, setTelegramModalOpen] = useState(false);
+  const [exnessModalOpen, setExnessModalOpen] = useState(false);
   const [riskBreaches, setRiskBreaches] = useState<any[]>([]);
 
   // Fetch risk alert status
@@ -147,6 +150,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenAddTrade 
           <span className="hidden sm:inline">Add Trade</span>
         </button>
 
+        {/* Exness Connection Button */}
+        <button
+          onClick={() => setExnessModalOpen(true)}
+          title="Connect & Synchronize Exness Account"
+          className="p-2 text-brand-gold hover:text-brand-goldLight rounded-xl hover:bg-brand-gold/10 border border-brand-gold/30 transition-all flex items-center gap-1.5 flex-shrink-0"
+        >
+          <Link2 className="w-4 h-4" />
+          <span className="hidden xl:inline text-xs font-semibold text-brand-gold">Exness API</span>
+        </button>
+
         {/* Telegram Notifications Button */}
         <button
           onClick={() => setTelegramModalOpen(true)}
@@ -211,6 +224,16 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenAddTrade 
               <button
                 onClick={() => {
                   setProfileMenuOpen(false);
+                  setExnessModalOpen(true);
+                }}
+                className="flex items-center gap-2 w-full px-3 py-2 text-xs text-brand-gold hover:bg-brand-gold/10 rounded-lg transition-colors font-medium"
+              >
+                <Link2 className="w-3.5 h-3.5" />
+                <span>Exness API Connection</span>
+              </button>
+              <button
+                onClick={() => {
+                  setProfileMenuOpen(false);
                   setTelegramModalOpen(true);
                 }}
                 className="flex items-center gap-2 w-full px-3 py-2 text-xs text-sky-400 hover:bg-sky-500/10 rounded-lg transition-colors font-medium"
@@ -236,6 +259,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenAddTrade 
       <TelegramSettingsModal
         isOpen={telegramModalOpen}
         onClose={() => setTelegramModalOpen(false)}
+      />
+
+      {/* Exness Connection Modal */}
+      <ExnessConnectionModal
+        isOpen={exnessModalOpen}
+        onClose={() => setExnessModalOpen(false)}
       />
     </header>
   );

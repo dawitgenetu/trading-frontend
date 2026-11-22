@@ -19,6 +19,8 @@ import {
   Send,
   Heart,
   ShieldCheck,
+  Link2,
+  RefreshCw,
 } from 'lucide-react';
 import { useAccount } from '../context/AccountContext';
 import { api } from '../services/api';
@@ -63,6 +65,7 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
   const [closedDisciplineTrade, setClosedDisciplineTrade] = useState<Trade | null>(null);
   const [showDisciplineModal, setShowDisciplineModal] = useState<boolean>(false);
   const [telegramModalOpen, setTelegramModalOpen] = useState<boolean>(false);
+  const [exnessSyncing, setExnessSyncing] = useState<boolean>(false);
 
   const fetchTrades = async () => {
     try {
@@ -170,6 +173,29 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
             <Clock className="w-3.5 h-3.5 text-brand-gold" />
             <span>Rule: <b className="text-brand-gold">Max 2 Trades/Day</b></span>
           </div>
+
+          {/* Exness Sync Button */}
+          <button
+            onClick={async () => {
+              try {
+                setExnessSyncing(true);
+                const res = await api.syncExness();
+                alert(`Exness sync completed! Synced ${res.syncedTradesCount} trade(s).`);
+                await fetchTrades();
+                await refreshAccounts();
+              } catch (e: any) {
+                alert(e.message || 'Exness sync failed');
+              } finally {
+                setExnessSyncing(false);
+              }
+            }}
+            disabled={exnessSyncing}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-brand-gold/40 bg-brand-gold/10 text-brand-gold text-xs font-semibold hover:bg-brand-gold/20 transition-colors shadow-sm"
+            title="Automatically sync closed trades and positions from connected Exness account"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${exnessSyncing ? 'animate-spin' : ''}`} />
+            <span>{exnessSyncing ? 'Syncing...' : 'Sync Exness'}</span>
+          </button>
 
           {/* Telegram Notifications Button */}
           <button
@@ -302,7 +328,17 @@ export const JournalPage: React.FC<JournalPageProps> = ({ onAddTrade, onEditTrad
                     </td>
 
                     <td className="py-3.5 px-4 font-bold text-slate-900 dark:text-white">
-                      {trade.symbol}
+                      <div className="flex items-center gap-1.5">
+                        <span>{trade.symbol}</span>
+                        {(trade.source === 'EXNESS' || trade.exnessTicket) && (
+                          <span
+                            className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-brand-gold/15 text-brand-gold border border-brand-gold/30 tracking-wider"
+                            title={`Exness Ticket #${trade.exnessTicket || ''}`}
+                          >
+                            EXNESS
+                          </span>
+                        )}
+                      </div>
                     </td>
 
                     <td className="py-3.5 px-3">
