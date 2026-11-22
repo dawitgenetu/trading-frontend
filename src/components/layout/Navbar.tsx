@@ -52,7 +52,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenAddTrade 
   }, [selectedAccount?.id]);
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 lg:px-8 border-b border-slate-200 dark:border-brand-tealBorder bg-white/90 dark:bg-dark-sidebar/95 backdrop-blur-md transition-colors">
+    <header className="sticky top-0 z-30 flex items-center justify-between h-16 px-4 lg:px-8 border-b border-slate-200 dark:border-brand-tealBorder bg-white/95 dark:bg-dark-sidebar/95 backdrop-blur-md transition-colors w-full">
       <div className="flex items-center gap-3">
         <button
           onClick={onToggleSidebar}
@@ -137,11 +137,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenAddTrade 
       </div>
 
       {/* Right Controls */}
-      <div className="flex items-center gap-2 sm:gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
         {/* Quick Add Trade Button with Yellow Sapling signature styling */}
         <button
           onClick={onOpenAddTrade}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-gold hover:bg-brand-goldLight text-brand-tealDark font-semibold text-xs sm:text-sm shadow-md shadow-brand-gold/25 transition-all active:scale-95"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-brand-gold hover:bg-brand-goldLight text-brand-tealDark font-semibold text-xs sm:text-sm shadow-md shadow-brand-gold/25 transition-all active:scale-95 flex-shrink-0"
         >
           <Plus className="w-4 h-4 stroke-[2.5]" />
           <span className="hidden sm:inline">Add Trade</span>
@@ -151,7 +151,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleSidebar, onOpenAddTrade 
         <button
           onClick={() => setTelegramModalOpen(true)}
           title="Configure Telegram Bot Alerts & Daily Limit Notifications"
-          className="p-2 text-sky-400 hover:text-sky-300 rounded-xl hover:bg-sky-500/10 border border-sky-500/20 transition-all flex items-center gap-1.5"
+          className="p-2 text-sky-400 hover:text-sky-300 rounded-xl hover:bg-sky-500/10 border border-sky-500/20 transition-all flex items-center gap-1.5 flex-shrink-0"
         >
           <Send className="w-4 h-4" />
           <span className="hidden xl:inline text-xs font-semibold text-sky-400">Telegram Bot</span>

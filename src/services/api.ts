@@ -299,7 +299,23 @@ class ApiService {
 
   // Telegram Notifications
   async getTelegramSettings(): Promise<{ success: boolean; settings: any; isConfigured: boolean; hasEnvFallback: boolean }> {
-    return this.request('/telegram/settings');
+    try {
+      return await this.request('/telegram/settings');
+    } catch (err: any) {
+      console.warn('Telegram settings fetch error (using fallback):', err);
+      return {
+        success: false,
+        settings: {
+          botToken: '',
+          chatId: '',
+          notifyOnTradeOpen: true,
+          notifyOnTradeClose: true,
+          notifyOnDailyLimit: true,
+        },
+        isConfigured: false,
+        hasEnvFallback: false,
+      };
+    }
   }
 
   async saveTelegramSettings(settings: any): Promise<{ success: boolean; settings: any; isConfigured: boolean }> {

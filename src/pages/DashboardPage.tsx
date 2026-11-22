@@ -10,7 +10,10 @@ import {
   PieChart as PieIcon,
   Calendar,
   Filter,
+  Send,
+  Bot,
 } from 'lucide-react';
+import { TelegramSettingsModal } from '../components/common/TelegramSettingsModal';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -34,6 +37,7 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
   const [dateRange, setDateRange] = useState<string>('30d');
   const [customStart, setCustomStart] = useState<string>('');
   const [customEnd, setCustomEnd] = useState<string>('');
+  const [telegramModalOpen, setTelegramModalOpen] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<any>(null);
@@ -455,6 +459,40 @@ export const DashboardPage: React.FC<{ onNavigate: (tab: string) => void }> = ({
           )}
         </div>
       </div>
+
+      {/* Telegram Discipline & Notifications Banner Card */}
+      <div className="p-4 sm:p-5 rounded-2xl border border-sky-500/30 bg-gradient-to-r from-sky-950/30 via-brand-tealSurface/90 to-brand-tealSurface/90 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="flex items-center gap-3.5">
+          <div className="p-3 rounded-2xl bg-sky-500/15 text-sky-400 border border-sky-500/30 flex-shrink-0">
+            <Send className="w-6 h-6 stroke-[2.2]" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="text-sm sm:text-base font-bold text-white">Telegram Discipline & Notifications Bot</h3>
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-500/20 text-sky-400 border border-sky-500/30">
+                Discipline Bridge
+              </span>
+            </div>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Instant alerts for trade entries, closed trades with calm-down tips, and 2-trades daily limit lockout.
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => setTelegramModalOpen(true)}
+          className="w-full md:w-auto px-4 py-2.5 text-xs font-bold rounded-xl bg-sky-500/15 hover:bg-sky-500/25 text-sky-400 border border-sky-500/30 transition-all flex items-center justify-center gap-2 whitespace-nowrap active:scale-95 shadow-sm"
+        >
+          <Send className="w-3.5 h-3.5" />
+          <span>Configure Bot & Test</span>
+        </button>
+      </div>
+
+      {/* Telegram Bot Settings Modal */}
+      <TelegramSettingsModal
+        isOpen={telegramModalOpen}
+        onClose={() => setTelegramModalOpen(false)}
+      />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   AlertTriangle,
   CheckCircle2,
@@ -36,6 +37,17 @@ export const PostTradeDisciplineModal: React.FC<PostTradeDisciplineModalProps> =
   const [timerRunning, setTimerRunning] = useState(false);
 
   useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
     let interval: any = null;
     if (timerRunning && timerSeconds > 0) {
       interval = setInterval(() => {
@@ -55,8 +67,8 @@ export const PostTradeDisciplineModal: React.FC<PostTradeDisciplineModalProps> =
     return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in font-mono">
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in font-mono">
       <div className="relative w-full max-w-lg p-6 sm:p-7 rounded-3xl border border-brand-tealBorder bg-brand-tealSurface/98 shadow-2xl space-y-5 max-h-[92vh] overflow-y-auto">
         {/* Close Button */}
         <button
@@ -221,6 +233,7 @@ export const PostTradeDisciplineModal: React.FC<PostTradeDisciplineModalProps> =
           <span>I Understand & I Am In Full Emotional Control</span>
         </button>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };

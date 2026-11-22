@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Send,
   X,
@@ -31,22 +32,28 @@ export const TelegramSettingsModal: React.FC<TelegramSettingsModalProps> = ({ is
 
   useEffect(() => {
     if (isOpen) {
+      document.body.style.overflow = 'hidden';
       loadSettings();
+    } else {
+      document.body.style.overflow = '';
     }
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [isOpen]);
 
   const loadSettings = async () => {
     try {
       setLoading(true);
       const res = await api.getTelegramSettings();
-      if (res.settings) {
+      if (res && res.settings) {
         setBotToken(res.settings.botToken || '');
         setChatId(res.settings.chatId || '');
         setNotifyOnTradeOpen(res.settings.notifyOnTradeOpen ?? true);
         setNotifyOnTradeClose(res.settings.notifyOnTradeClose ?? true);
         setNotifyOnDailyLimit(res.settings.notifyOnDailyLimit ?? true);
       }
-      setIsConfigured(res.isConfigured);
+      setIsConfigured(Boolean(res && res.isConfigured));
     } catch (err: any) {
       console.warn('Failed to load telegram settings:', err);
     } finally {
@@ -91,8 +98,8 @@ export const TelegramSettingsModal: React.FC<TelegramSettingsModalProps> = ({ is
 
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in font-mono">
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in font-mono">
       <div className="relative w-full max-w-lg p-6 sm:p-7 rounded-3xl border border-brand-tealBorder bg-brand-tealSurface/98 shadow-2xl space-y-5 max-h-[92vh] overflow-y-auto">
         {/* Close Button */}
         <button
@@ -150,14 +157,14 @@ export const TelegramSettingsModal: React.FC<TelegramSettingsModalProps> = ({ is
             <Bot className="w-4 h-4" />
             <span>How to setup in 1 minute:</span>
           </div>
-          <ol className="list-decimal pl-5 space-y-1 text-[11px] text-slate-400">
+          <ol className="list-decimal pl-5 space-y-1.5 text-[11px] text-slate-400">
             <li>
-              Message <span className="text-brand-gold font-mono">@BotFather</span> on Telegram to create a bot and copy your <b className="text-white">Bot Token</b>.
+              Open <a href="https://t.me/BotFather" target="_blank" rel="noopener noreferrer" className="text-sky-400 underline hover:text-sky-300 font-semibold inline-flex items-center gap-0.5">@BotFather <ExternalLink className="w-2.5 h-2.5 inline" /></a> on Telegram, send <code className="text-brand-gold">/newbot</code>, and copy your <b className="text-white">Bot Token</b>.
             </li>
             <li>
-              Start your bot, then message <span className="text-brand-gold font-mono">@userinfobot</span> to get your numerical <b className="text-white">Chat ID</b>.
+              Press <code className="text-brand-gold">Start</code> on your bot, then message <a href="https://t.me/userinfobot" target="_blank" rel="noopener noreferrer" className="text-sky-400 underline hover:text-sky-300 font-semibold inline-flex items-center gap-0.5">@userinfobot <ExternalLink className="w-2.5 h-2.5 inline" /></a> to get your numeric <b className="text-white">Chat ID</b>.
             </li>
-            <li>Enter them below and click <b className="text-white">"Send Test Notification"</b>.</li>
+            <li>Paste them below and click <b className="text-white">"Send Test Notification"</b> to verify.</li>
           </ol>
         </div>
 
@@ -251,6 +258,7 @@ export const TelegramSettingsModal: React.FC<TelegramSettingsModalProps> = ({ is
           </div>
         </form>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
